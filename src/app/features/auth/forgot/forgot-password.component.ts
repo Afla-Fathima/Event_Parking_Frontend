@@ -4,11 +4,11 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
-  selector: 'app-forgot',
+  selector: 'app-forgot-password',
   standalone: true,
   imports: [FormsModule, RouterLink],
-  templateUrl: './forgot.component.html',
-  styleUrl: './forgot.component.css',
+  templateUrl: './forgot-password.component.html',
+  styleUrl: './forgot-password.component.css',
 })
 export class ForgotComponent {
   private readonly auth = inject(AuthService);

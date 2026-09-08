@@ -4,11 +4,11 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
-  selector: 'app-reset',
+  selector: 'app-reset-password',
   standalone: true,
   imports: [ReactiveFormsModule, RouterLink],
-  templateUrl: './reset.component.html',
-  styleUrl: './reset.component.css',
+  templateUrl: './reset-password.component.html',
+  styleUrl: './reset-password.component.css',
 })
 export class ResetComponent {
   private readonly auth = inject(AuthService);
