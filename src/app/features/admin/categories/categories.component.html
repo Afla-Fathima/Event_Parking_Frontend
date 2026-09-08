@@ -1,0 +1,89 @@
+<section class="page">
+  <div class="container">
+    <header class="page-head">
+      <div>
+        <span class="page-kicker">ADMIN · CATEGORIES</span>
+        <h1>Event categories</h1>
+        <p class="muted">Maintain the labels customers use to filter the event catalogue.</p>
+      </div>
+    </header>
+    <div class="admin-split">
+      <form class="card panel form-card" #form="ngForm" (ngSubmit)="save(form)">
+        <h2>{{ editing() ? 'Edit category' : 'Add category' }}</h2>
+        <div class="form-grid">
+          <div class="field">
+            <label>Name</label
+            ><input class="input" name="categoryName" [(ngModel)]="model.categoryName" required />
+          </div>
+          <div class="field">
+            <label>Description</label
+            ><textarea
+              class="textarea"
+              name="description"
+              [(ngModel)]="model.description"
+            ></textarea>
+          </div>
+          <div class="toolbar">
+            <button class="btn btn-primary" type="submit" [disabled]="form.invalid || busy()">
+              {{ busy() ? 'Saving…' : 'Save category' }}
+            </button>
+            @if (editing()) {
+              <button class="btn btn-outline" type="button" (click)="reset(form)">Cancel</button>
+            }
+          </div>
+        </div>
+      </form>
+      <section>
+        @if (loading()) {
+          <app-loading />
+        } @else if (items().length === 0) {
+          <app-empty title="No categories" text="Create the first event category." />
+        } @else {
+          <div class="table-wrap card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (c of items(); track c.categoryId) {
+                  <tr>
+                    <td>
+                      <strong>{{ c.categoryName }}</strong
+                      ><small>{{ c.description }}</small>
+                    </td>
+                    <td>{{ c.status }}</td>
+                    <td>
+                      <div class="row-actions">
+                        <button class="btn btn-outline btn-sm" type="button" (click)="edit(c)">
+                          Edit</button
+                        ><button
+                          class="btn btn-danger btn-sm"
+                          type="button"
+                          (click)="deleteTarget.set(c)"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      </section>
+    </div>
+    <app-confirm-dialog
+      [open]="!!deleteTarget()"
+      title="Delete category?"
+      [message]="'Delete ' + (deleteTarget()?.categoryName ?? 'this category') + '?'"
+      confirmText="Delete"
+      (confirm)="remove()"
+      (cancel)="deleteTarget.set(null)"
+    />
+  </div>
+</section>
