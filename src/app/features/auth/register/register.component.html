@@ -1,0 +1,61 @@
+<div class="auth-page">
+  <section class="auth-visual">
+    <div class="logo"><b>P</b> ParkFlow</div>
+    <div class="hero-copy">
+      <span>CREATE YOUR ACCESS</span>
+      <h1>Your next event starts here.</h1>
+      <p>
+        Create a customer account once, then move through events, seats, parking, checkout and
+        payments without repeated sign-ins.
+      </p>
+    </div>
+    <div class="feature-row">
+      <i>Responsive Angular 19</i><i>Secure session</i><i>Fast booking flow</i>
+    </div>
+  </section>
+  <section class="auth-card-wrap">
+    <form class="auth-card" [formGroup]="form" (ngSubmit)="submit()">
+      <span class="auth-kicker">NEW CUSTOMER</span>
+      <h2>Create account</h2>
+      <p>All fields are validated before the request is sent.</p>
+      @if (error()) {
+        <div class="message error">{{ error() }}</div>
+      }
+      @if (success()) {
+        <div class="message success">{{ success() }}</div>
+      }
+      <div class="form-grid grid-2">
+        <div class="field">
+          <label>Full name</label
+          ><input class="input" formControlName="fullName" placeholder="Your name" />
+        </div>
+        <div class="field">
+          <label>Phone</label
+          ><input class="input" formControlName="phone" placeholder="077 123 4567" />
+        </div>
+      </div>
+      <div class="field">
+        <label>Email</label
+        ><input class="input" type="email" formControlName="email" placeholder="you@example.com" />
+      </div>
+      <div class="form-grid grid-2">
+        <div class="field">
+          <label>Password</label><input class="input" type="password" formControlName="password" />
+        </div>
+        <div class="field">
+          <label>Confirm password</label
+          ><input class="input" type="password" formControlName="confirmPassword" />
+        </div>
+      </div>
+      @if (form.touched && form.hasError('passwordMismatch')) {
+        <span class="field-error">Passwords must match.</span>
+      }
+      <button class="btn btn-primary wide" type="submit" [disabled]="busy()">
+        {{ busy() ? 'Creating…' : 'Create customer account' }}
+      </button>
+      <div class="auth-footer">
+        Already registered? <a class="auth-link" routerLink="/login">Sign in</a>
+      </div>
+    </form>
+  </section>
+</div>
