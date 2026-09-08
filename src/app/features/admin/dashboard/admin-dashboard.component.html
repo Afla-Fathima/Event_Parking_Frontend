@@ -1,0 +1,95 @@
+<section class="page">
+  <div class="container">
+    <header class="admin-hero">
+      <div>
+        <span class="page-kicker">ADMIN CONTROL CENTER</span>
+        <h1>Platform overview</h1>
+        <p>Manage event inventory, customers and bookings from one clean operational workspace.</p>
+      </div>
+      <div class="hero-actions">
+        <a class="btn btn-primary" routerLink="/admin/events">Manage events</a>
+        <a class="btn btn-outline" routerLink="/admin/inventory">Seat & parking builder</a>
+      </div>
+    </header>
+
+    @if (loading()) {
+      <app-loading />
+    } @else if (error()) {
+      <app-error [message]="error()" (retry)="load()" />
+    } @else {
+      <div class="grid grid-3 stats">
+        @for (stat of stats(); track stat.label) {
+          <app-stat-card
+            [icon]="stat.icon"
+            [label]="stat.label"
+            [value]="stat.value"
+            [hint]="stat.hint"
+          />
+        }
+      </div>
+
+      <section class="occupancy card panel">
+        <div class="occupancy-head">
+          <div>
+            <span class="page-kicker">LIVE OCCUPANCY</span>
+            <h2>Event capacity overview</h2>
+            <p class="muted">Seat and parking usage is calculated from each event layout.</p>
+          </div>
+        </div>
+
+        @if (occupancyLoading()) {
+          <app-loading text="Calculating occupancy…" />
+        } @else if (occupancyError()) {
+          <app-error [message]="occupancyError()" (retry)="load()" />
+        } @else if (occupancy().length === 0) {
+          <app-empty icon="E" title="No event occupancy yet" text="Create an event and configure its inventory." />
+        } @else {
+          <div class="occupancy-list">
+            @for (row of occupancy(); track row.eventId) {
+              <article class="occupancy-row">
+                <div class="occupancy-title">
+                  <strong>{{ row.eventName }}</strong>
+                  <small>{{ row.bookedSeats }}/{{ row.totalSeats }} seats booked</small>
+                </div>
+
+                <div class="metric">
+                  <div class="metric-line">
+                    <span>Seat occupancy</span><b>{{ row.seatPercent }}%</b>
+                  </div>
+                  <div class="bar" aria-label="Seat occupancy">
+                    <span [ngStyle]="{ width: row.seatPercent + '%' }"></span>
+                  </div>
+                </div>
+
+                <div class="metric">
+                  <div class="metric-line">
+                    <span>Parking occupancy</span><b>{{ row.parkingPercent }}%</b>
+                  </div>
+                  <div class="bar parking" aria-label="Parking occupancy">
+                    <span [ngStyle]="{ width: row.parkingPercent + '%' }"></span>
+                  </div>
+                  <small>{{ row.occupiedParking }}/{{ row.totalParking }} occupied</small>
+                </div>
+              </article>
+            }
+          </div>
+        }
+      </section>
+
+      <div class="ops grid grid-4">
+        <a class="card" routerLink="/admin/venues">
+          <b>V</b><span><strong>Venues</strong><small>Master data</small></span>→
+        </a>
+        <a class="card" routerLink="/admin/categories">
+          <b>C</b><span><strong>Categories</strong><small>Browse taxonomy</small></span>→
+        </a>
+        <a class="card" routerLink="/admin/bookings">
+          <b>B</b><span><strong>Bookings</strong><small>Event reservations</small></span>→
+        </a>
+        <a class="card" routerLink="/admin/customers">
+          <b>U</b><span><strong>Customers</strong><small>Account status</small></span>→
+        </a>
+      </div>
+    }
+  </div>
+</section>
