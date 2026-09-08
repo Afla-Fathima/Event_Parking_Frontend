@@ -1,0 +1,131 @@
+<section class="page">
+  <div class="container">
+    <header class="page-head">
+      <div>
+        <span class="page-kicker">ADMIN · INVENTORY BUILDER</span>
+        <h1>Seats & parking layouts</h1>
+        <p class="muted">
+          Select an event, build a clean A–T seat map capped at 200 seats, and create the standard P01–P20
+          parking layout.
+        </p>
+      </div>
+      <div class="field event-select">
+        <label>Event</label
+        ><select class="select" [(ngModel)]="selectedEventId" (ngModelChange)="loadInventory()">
+          @for (e of events(); track e.eventId) {
+            <option [ngValue]="e.eventId">{{ e.eventName }}</option>
+          }
+        </select>
+      </div>
+    </header>
+    @if (error()) {
+      <div class="message error">{{ error() }}</div>
+    }
+    @if (success()) {
+      <div class="message success">{{ success() }}</div>
+    }
+    @if (loading()) {
+      <app-loading text="Loading event inventory…" />
+    } @else if (!event) {
+      <app-empty
+        title="No event selected"
+        text="Create an event before building seat and parking layouts."
+      />
+    } @else {
+      <section class="inventory-summary grid grid-3">
+        <article class="card panel">
+          <span>Event capacity</span><strong>{{ event.capacity }}</strong
+          ><small>UI target: {{ seatTarget }} seats max</small>
+        </article>
+        <article class="card panel">
+          <span>Clean seats</span><strong>{{ cleanSeats.length }}</strong
+          ><small>{{ cleanSeats.length >= seatTarget ? 'Seat target ready' : 'Missing ' + (seatTarget - cleanSeats.length) }}</small>
+        </article>
+        <article class="card panel">
+          <span>Parking slots</span><strong>{{ slots().length }}</strong
+          ><small>Standard target: 20</small>
+        </article>
+      </section>
+      <div class="inventory-grid">
+        <section class="card panel">
+          <div class="section-head">
+            <div>
+              <span class="page-kicker">SEAT MAP</span>
+              <h2>{{ cleanSeats.length }} / {{ seatTarget }} seats</h2>
+            </div>
+            <button
+              class="btn btn-primary"
+              type="button"
+              [disabled]="busy()"
+              (click)="generateSeats()"
+            >
+              {{ busy() ? 'Working…' : 'Generate missing seats' }}
+            </button>
+          </div>
+          <div class="legend">
+            <span>Rows A–T only</span><span>Row A = VIP · others Regular</span
+            ><span>Booked/reserved remains locked</span>
+          </div>
+          @if (cleanSeats.length === 0) {
+            <app-empty
+              icon="S"
+              title="No seats yet"
+              text="Generate a clean A–T seat map with one click."
+            />
+          } @else {
+            <div class="seat-admin-scroll">
+              <div class="seat-admin-grid">
+                @for (s of cleanSeats; track s.seatId) {
+                  <div class="seat-tile" [class.locked]="s.status.toLowerCase() !== 'available'">
+                    <strong>{{ s.seatNumber }}</strong
+                    ><span>{{ s.seatType }}</span
+                    ><small>{{ s.price | currency: 'LKR' : 'symbol' : '1.0-0' }}</small>
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </section>
+        <section class="card panel">
+          <div class="section-head">
+            <div>
+              <span class="page-kicker">PARKING LAYOUT</span>
+              <h2>{{ slots().length }} / 20 slots</h2>
+            </div>
+            <button
+              class="btn btn-primary"
+              type="button"
+              [disabled]="busy()"
+              (click)="generateParking()"
+            >
+              {{ busy() ? 'Working…' : 'Generate P01–P20' }}
+            </button>
+          </div>
+          <div class="legend">
+            <span>P01–P15 = Car</span><span>P16–P20 = Bike</span
+            ><span>Fee: {{ event.parkingFee | currency: 'LKR' : 'symbol' : '1.0-0' }}</span>
+          </div>
+          @if (slots().length === 0) {
+            <app-empty
+              icon="P"
+              title="No parking slots yet"
+              text="Generate a standard 20-slot layout."
+            />
+          } @else {
+            <div class="parking-admin-grid">
+              @for (p of slots(); track p.parkingSlotId) {
+                <div class="parking-tile" [class.locked]="p.status.toLowerCase() !== 'available'">
+                  <b>P</b
+                  ><span
+                    ><strong>{{ p.slotNumber }}</strong
+                    ><small>{{ p.vehicleType }}</small></span
+                  ><app-status-badge [label]="p.status" />
+                </div>
+              }
+            </div>
+          }
+        </section>
+      </div>
+    }
+  </div>
+</section>

@@ -1,0 +1,143 @@
+.event-select {
+  min-width: 280px;
+}
+.message {
+  padding: 12px 14px;
+  border-radius: 12px;
+  margin-bottom: 14px;
+  font-size: 11px;
+  font-weight: 800;
+}
+.message.error {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+.message.success {
+  background: var(--success-soft);
+  color: var(--success);
+}
+.inventory-summary {
+  margin-bottom: 18px;
+}
+.inventory-summary article {
+  display: grid;
+  gap: 3px;
+}
+.inventory-summary span,
+.inventory-summary small {
+  color: var(--muted);
+  font-size: 10px;
+}
+.inventory-summary strong {
+  font-size: 26px;
+}
+.inventory-grid {
+  display: grid;
+  gap: 18px;
+}
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+}
+.section-head h2 {
+  margin: 5px 0;
+}
+.legend {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  margin: 10px 0 16px;
+}
+.legend span {
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: #f1f4f8;
+  color: #6f7c91;
+  font-size: 9px;
+  font-weight: 800;
+}
+.seat-admin-scroll {
+  overflow: auto;
+}
+.seat-admin-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 70px);
+  gap: 8px;
+  width: max-content;
+  min-width: 100%;
+  justify-content: center;
+}
+.seat-tile {
+  height: 62px;
+  border: 1px solid #d8e0eb;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  background: #fff;
+}
+.seat-tile strong {
+  font-size: 11px;
+}
+.seat-tile span,
+.seat-tile small {
+  font-size: 7px;
+  color: var(--muted);
+}
+.seat-tile.locked {
+  background: #eef1f5;
+  color: #909bad;
+}
+.parking-admin-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 9px;
+}
+.parking-tile {
+  min-height: 68px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+}
+.parking-tile > b {
+  width: 34px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 9px;
+  background: var(--info-soft);
+  color: var(--info);
+}
+.parking-tile span {
+  display: grid;
+}
+.parking-tile small {
+  font-size: 8px;
+  color: var(--muted);
+}
+.parking-tile.locked {
+  background: #f0f2f5;
+}
+@media (max-width: 850px) {
+  .parking-admin-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .event-select {
+    min-width: 100%;
+  }
+}
+@media (max-width: 500px) {
+  .parking-admin-grid {
+    grid-template-columns: 1fr;
+  }
+  .section-head {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
