@@ -24,6 +24,15 @@
       </div>
     </header>
 
+    @if (state.notice()) {
+      <div class="error-banner">
+        <span>{{ state.notice() }}</span>
+        <button type="button" class="btn btn-outline btn-sm" (click)="state.notice.set('')">
+          Dismiss
+        </button>
+      </div>
+    }
+
     @if (loading()) {
       <app-loading text="Preparing your premium seat map…" />
     } @else if (error()) {

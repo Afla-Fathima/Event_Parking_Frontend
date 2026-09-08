@@ -11,6 +11,15 @@
       </div>
       <button class="btn btn-outline" type="button" (click)="back()">← Seats</button>
     </header>
+
+    @if (state.notice()) {
+      <div class="error-banner">
+        <span>{{ state.notice() }}</span>
+        <button type="button" class="btn btn-outline btn-sm" (click)="state.notice.set('')">
+          Dismiss
+        </button>
+      </div>
+    }
     @if (loading()) {
       <app-loading text="Loading parking layout…" />
     } @else if (error()) {
