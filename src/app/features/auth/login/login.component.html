@@ -1,0 +1,74 @@
+<div class="auth-page">
+  <section class="auth-visual">
+    <div class="logo"><b>P</b> ParkFlow</div>
+    <div class="hero-copy">
+      <span>EVENT & PARKING PLATFORM</span>
+      <h1>One place for every seat, slot and moment.</h1>
+      <p>
+        Browse events, choose your exact seats, reserve parking and manage every booking from one
+        polished workspace.
+      </p>
+    </div>
+    <div class="feature-row">
+      <i>Visual seat maps</i><i>Parking layouts</i><i>Secure JWT access</i><i>Live booking state</i>
+    </div>
+  </section>
+  <section class="auth-card-wrap">
+    <form class="auth-card" #form="ngForm" (ngSubmit)="submit(form)">
+      <span class="auth-kicker">WELCOME BACK</span>
+      <h2>Sign in</h2>
+      <p>Use your customer or administrator account.</p>
+      @if (success()) {
+        <div class="message success">{{ success() }}</div>
+      }
+      @if (error()) {
+        <div class="message error">{{ error() }}</div>
+      }
+      <div class="form-grid">
+        <div class="field">
+          <label>Email address</label
+          ><input
+            class="input"
+            type="email"
+            name="email"
+            [(ngModel)]="email"
+            required
+            email
+            #emailCtrl="ngModel"
+            autocomplete="email"
+            placeholder="you@example.com"
+          />
+          @if (emailCtrl.touched && emailCtrl.invalid) {
+            <span class="field-error">Enter a valid email address.</span>
+          }
+        </div>
+        <div class="field">
+          <label>Password</label
+          ><input
+            class="input"
+            type="password"
+            name="password"
+            [(ngModel)]="password"
+            required
+            minlength="6"
+            #passCtrl="ngModel"
+            autocomplete="current-password"
+            placeholder="••••••••"
+          />
+          @if (passCtrl.touched && passCtrl.invalid) {
+            <span class="field-error">Password is required.</span>
+          }
+        </div>
+        <div class="auth-actions">
+          <a class="auth-link" routerLink="/forgot-password">Forgot password?</a>
+        </div>
+        <button class="btn btn-primary wide" type="submit" [disabled]="form.invalid || busy()">
+          {{ busy() ? 'Signing in…' : 'Sign in to ParkFlow' }}
+        </button>
+      </div>
+      <div class="auth-footer">
+        New customer? <a class="auth-link" routerLink="/register">Create an account</a>
+      </div>
+    </form>
+  </section>
+</div>
