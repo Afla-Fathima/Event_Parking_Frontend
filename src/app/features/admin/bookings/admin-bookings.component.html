@@ -1,0 +1,67 @@
+<section class="page">
+  <div class="container">
+    <header class="page-head">
+      <div>
+        <span class="page-kicker">ADMIN · BOOKINGS</span>
+        <h1>Booking operations</h1>
+        <p class="muted">
+          The current API exposes admin booking lists by event, so choose an event to inspect its
+          reservations.
+        </p>
+      </div>
+      <div class="field select">
+        <label>Event</label
+        ><select class="select" [(ngModel)]="selectedEventId" (ngModelChange)="loadBookings()">
+          @for (e of events(); track e.eventId) {
+            <option [ngValue]="e.eventId">{{ e.eventName }}</option>
+          }
+        </select>
+      </div>
+    </header>
+    @if (loading()) {
+      <app-loading />
+    } @else if (error()) {
+      <app-error [message]="error()" (retry)="loadBookings()" />
+    } @else if (bookings().length === 0) {
+      <app-empty
+        icon="B"
+        title="No bookings for this event"
+        text="Reservations will appear here as customers create bookings."
+      />
+    } @else {
+      <div class="table-wrap card">
+        <table>
+          <thead>
+            <tr>
+              <th>Booking</th>
+              <th>Customer</th>
+              <th>Seats / Parking</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th>Payment</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (b of bookings(); track b.bookingId) {
+              <tr>
+                <td>
+                  <strong>{{ b.bookingNumber }}</strong
+                  ><small>{{ b.bookingDate | date: 'medium' }}</small>
+                </td>
+                <td>{{ b.customerName }}</td>
+                <td>
+                  <strong>{{ b.seats.join(', ') || '—' }}</strong
+                  ><small>{{ b.parkingSlot || 'No parking' }}</small>
+                </td>
+                <td>{{ b.totalAmount | currency: 'LKR' : 'symbol' : '1.0-0' }}</td>
+                <td><app-status-badge [label]="b.status | bookingStatus" /></td>
+                <td><app-status-badge [label]="b.paymentStatus" /></td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</section>
+
