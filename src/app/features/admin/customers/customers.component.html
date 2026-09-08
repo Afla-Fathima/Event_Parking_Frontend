@@ -1,0 +1,76 @@
+<section class="page">
+  <div class="container">
+    <header class="page-head">
+      <div>
+        <span class="page-kicker">ADMIN · CUSTOMERS</span>
+        <h1>Customer accounts</h1>
+        <p class="muted">Search by name or email and manage account status.</p>
+      </div>
+      <div class="search">
+        <input
+          class="input"
+          [(ngModel)]="search"
+          (keyup.enter)="load()"
+          placeholder="Search customers…"
+        /><button class="btn btn-primary" type="button" (click)="load()">Search</button>
+      </div>
+    </header>
+    @if (loading()) {
+      <app-loading />
+    } @else if (error() && !items().length) {
+      <app-error [message]="error()" (retry)="load()" />
+    } @else if (items().length === 0) {
+      <app-empty icon="C" title="No matching customers" text="Try another name or email." />
+    } @else {
+      <div class="table-wrap card">
+        <table>
+          <thead>
+            <tr>
+              <th>Customer</th>
+              <th>Phone</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (c of items(); track c.customerId) {
+              <tr>
+                <td>
+                  <strong>{{ c.name }}</strong
+                  ><small>{{ c.email }}</small>
+                </td>
+                <td>{{ c.phoneNumber }}</td>
+                <td>{{ c.role }}</td>
+                <td><app-status-badge [label]="c.status" /></td>
+                <td>
+                  <button
+                    class="btn btn-sm"
+                    [class.btn-danger]="c.status.toLowerCase() === 'active'"
+                    [class.btn-soft]="c.status.toLowerCase() !== 'active'"
+                    type="button"
+                    (click)="target.set(c)"
+                  >
+                    {{ c.status.toLowerCase() === 'active' ? 'Deactivate' : 'Reactivate' }}
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+    <app-confirm-dialog
+      [open]="!!target()"
+      [title]="
+        target()?.status?.toLowerCase() === 'active'
+          ? 'Deactivate customer?'
+          : 'Reactivate customer?'
+      "
+      [message]="'Change account status for ' + (target()?.name ?? 'this customer') + '?'"
+      confirmText="Confirm"
+      (confirm)="toggle()"
+      (cancel)="target.set(null)"
+    />
+  </div>
+</section>
