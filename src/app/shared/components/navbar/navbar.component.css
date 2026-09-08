@@ -1,0 +1,901 @@
+.nav-shell {
+  position: sticky;
+
+  top: 0;
+
+  z-index: 1000;
+
+  height: 76px;
+
+  background:
+    rgba(
+      11,
+      19,
+      36,
+      0.97
+    );
+
+  backdrop-filter:
+    blur(18px);
+
+  border-bottom:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.08
+    );
+
+  color: #ffffff;
+}
+
+
+.nav-inner {
+  width:
+    min(
+      1440px,
+      calc(100% - 36px)
+    );
+
+  height: 100%;
+
+  margin: 0 auto;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 24px;
+}
+
+
+/* ================================
+   BRAND
+================================ */
+
+.brand {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  min-width: max-content;
+}
+
+
+.brand-mark {
+  width: 40px;
+
+  height: 40px;
+
+  display: grid;
+
+  place-items: center;
+
+  border-radius: 13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #5b4cf5,
+      #8275ff
+    );
+
+  color: #ffffff;
+
+  font-weight: 950;
+
+  box-shadow:
+    0 10px 28px
+    rgba(
+      91,
+      76,
+      245,
+      0.34
+    );
+}
+
+
+.brand-copy,
+.drawer-brand > span:last-child,
+.profile-copy,
+.drawer-user > span:last-child {
+  display: grid;
+
+  gap: 1px;
+}
+
+
+.brand strong,
+.drawer-brand strong {
+  font-size: 14px;
+}
+
+
+.brand small,
+.drawer-brand small,
+.profile-copy small,
+.drawer-user small {
+  color: #8fa0bb;
+
+  font-size: 9px;
+}
+
+
+/* ================================
+   DESKTOP LINKS
+================================ */
+
+.desktop-links {
+  flex: 1;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 3px;
+
+  min-width: 0;
+}
+
+
+.desktop-links a {
+  position: relative;
+
+  padding:
+    10px 9px;
+
+  border-radius: 10px;
+
+  color: #a9b6ca;
+
+  font-size: 11px;
+
+  font-weight: 760;
+
+  white-space: nowrap;
+
+  transition: 0.18s ease;
+}
+
+
+.desktop-links a:hover,
+.desktop-links a.active {
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.07
+    );
+
+  color: #ffffff;
+}
+
+
+.desktop-links a.active::after {
+  content: '';
+
+  position: absolute;
+
+  left: 12px;
+
+  right: 12px;
+
+  bottom: 4px;
+
+  height: 2px;
+
+  border-radius: 999px;
+
+  background: #7d70ff;
+}
+
+
+.badge-link b,
+.drawer-links b {
+  display: inline-grid;
+
+  place-items: center;
+
+  min-width: 18px;
+
+  height: 18px;
+
+  margin-left: 4px;
+
+  padding: 0 5px;
+
+  border-radius: 999px;
+
+  background: #ec5c76;
+
+  color: #ffffff;
+
+  font-size: 8px;
+}
+
+
+/* ================================
+   ACTIONS
+================================ */
+
+.nav-actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  margin-left: auto;
+}
+
+
+.booking-chip {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  padding:
+    7px 10px;
+
+  border:
+    1px solid
+    rgba(
+      126,
+      112,
+      255,
+      0.22
+    );
+
+  border-radius: 12px;
+
+  background:
+    rgba(
+      91,
+      76,
+      245,
+      0.16
+    );
+
+  color: #ddd9ff;
+
+  font-size: 10px;
+
+  font-weight: 800;
+}
+
+
+.booking-chip strong {
+  min-width: 24px;
+
+  height: 24px;
+
+  display: grid;
+
+  place-items: center;
+
+  border-radius: 8px;
+
+  background: #6658f7;
+
+  color: #ffffff;
+}
+
+
+/* ================================
+   PROFILE
+================================ */
+
+.profile-chip {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  padding:
+    6px 8px;
+
+  border-radius: 12px;
+
+  transition: 0.18s ease;
+}
+
+
+.profile-chip:hover {
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.06
+    );
+}
+
+
+.avatar {
+  width: 35px;
+
+  height: 35px;
+
+  display: grid;
+
+  place-items: center;
+
+  flex: 0 0 auto;
+
+  border-radius: 11px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #263552,
+      #394d73
+    );
+
+  color: #ffffff;
+
+  font-weight: 900;
+}
+
+
+.profile-copy strong {
+  max-width: 100px;
+
+  overflow: hidden;
+
+  color: #ffffff;
+
+  font-size: 10px;
+
+  text-overflow: ellipsis;
+
+  white-space: nowrap;
+}
+
+
+/* ================================
+   DESKTOP LOGOUT
+================================ */
+
+.desktop-logout {
+  min-height: 38px;
+
+  padding:
+    8px 12px;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 7px;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.12
+    );
+
+  border-radius: 11px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.055
+    );
+
+  color: #c8d3e4;
+
+  font-size: 10px;
+
+  font-weight: 850;
+
+  transition:
+    background 0.18s ease,
+    border-color 0.18s ease,
+    color 0.18s ease,
+    transform 0.18s ease;
+}
+
+
+.desktop-logout:hover {
+  transform:
+    translateY(-1px);
+
+  border-color:
+    rgba(
+      239,
+      92,
+      116,
+      0.35
+    );
+
+  background:
+    rgba(
+      239,
+      92,
+      116,
+      0.12
+    );
+
+  color: #ff9cad;
+}
+
+
+.logout-icon {
+  font-size: 16px;
+
+  line-height: 1;
+}
+
+
+/* ================================
+   MOBILE MENU BUTTON
+================================ */
+
+.menu-btn {
+  display: none;
+
+  width: 42px;
+
+  height: 42px;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.12
+    );
+
+  border-radius: 12px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.05
+    );
+
+  place-items: center;
+
+  align-content: center;
+
+  gap: 4px;
+}
+
+
+.menu-btn span {
+  width: 18px;
+
+  height: 2px;
+
+  border-radius: 99px;
+
+  background: #ffffff;
+}
+
+
+/* ================================
+   BACKDROP
+================================ */
+
+.drawer-backdrop {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 1100;
+
+  border: 0;
+
+  background:
+    rgba(
+      5,
+      11,
+      22,
+      0.46
+    );
+
+  backdrop-filter:
+    blur(3px);
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  transition:
+    opacity 0.2s ease;
+}
+
+
+.drawer-backdrop.visible {
+  opacity: 1;
+
+  pointer-events: auto;
+}
+
+
+/* ================================
+   DRAWER
+================================ */
+
+.mobile-drawer {
+  position: fixed;
+
+  z-index: 1200;
+
+  top: 0;
+
+  right: 0;
+
+  width:
+    min(
+      360px,
+      88vw
+    );
+
+  height: 100dvh;
+
+  padding: 18px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  background: #0b1427;
+
+  color: #ffffff;
+
+  box-shadow:
+    -20px 0 60px
+    rgba(
+      5,
+      10,
+      20,
+      0.24
+    );
+
+  transform:
+    translateX(105%);
+
+  transition:
+    transform 0.24s ease;
+}
+
+
+.mobile-drawer.open {
+  transform:
+    translateX(0);
+}
+
+
+.drawer-head,
+.drawer-brand,
+.drawer-user {
+  display: flex;
+
+  align-items: center;
+}
+
+
+.drawer-head {
+  justify-content:
+    space-between;
+
+  padding-bottom: 18px;
+
+  border-bottom:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.08
+    );
+}
+
+
+.drawer-brand {
+  gap: 10px;
+}
+
+
+.drawer-close {
+  width: 38px;
+
+  height: 38px;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.12
+    );
+
+  border-radius: 11px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.05
+    );
+
+  color: #ffffff;
+
+  font-size: 24px;
+}
+
+
+/* ================================
+   DRAWER USER
+================================ */
+
+.drawer-user {
+  gap: 11px;
+
+  margin:
+    18px 0;
+
+  padding: 13px;
+
+  border:
+    1px solid
+    rgba(
+      255,
+      255,
+      255,
+      0.08
+    );
+
+  border-radius: 14px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.04
+    );
+}
+
+
+.avatar.large {
+  width: 44px;
+
+  height: 44px;
+
+  border-radius: 13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #5b4cf5,
+      #8275ff
+    );
+}
+
+
+.drawer-user strong {
+  font-size: 12px;
+}
+
+
+/* ================================
+   DRAWER LINKS
+================================ */
+
+.drawer-links {
+  display: grid;
+
+  gap: 5px;
+}
+
+
+.drawer-links a {
+  display: flex;
+
+  align-items: center;
+
+  justify-content:
+    space-between;
+
+  padding:
+    12px 13px;
+
+  border-radius: 11px;
+
+  color: #aebbd0;
+
+  font-size: 12px;
+
+  font-weight: 800;
+}
+
+
+.drawer-links a:hover,
+.drawer-links a.active {
+  background:
+    rgba(
+      91,
+      76,
+      245,
+      0.16
+    );
+
+  color: #ffffff;
+}
+
+
+/* ================================
+   FOOTER
+================================ */
+
+.drawer-footer {
+  margin-top: auto;
+
+  display: grid;
+
+  gap: 10px;
+}
+
+
+.drawer-booking {
+  padding: 12px;
+
+  display: flex;
+
+  justify-content:
+    space-between;
+
+  gap: 12px;
+
+  border:
+    1px solid
+    rgba(
+      126,
+      112,
+      255,
+      0.2
+    );
+
+  border-radius: 13px;
+
+  background:
+    rgba(
+      91,
+      76,
+      245,
+      0.13
+    );
+
+  color: #ddd9ff;
+
+  font-size: 10px;
+}
+
+
+.logout {
+  min-height: 44px;
+
+  border:
+    1px solid
+    rgba(
+      239,
+      92,
+      116,
+      0.24
+    );
+
+  border-radius: 12px;
+
+  background:
+    rgba(
+      239,
+      92,
+      116,
+      0.08
+    );
+
+  color: #ffabb8;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  font-size: 11px;
+
+  font-weight: 850;
+}
+
+
+/* ================================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 1180px) {
+
+  .desktop-links a {
+    padding-inline: 6px;
+
+    font-size: 9px;
+  }
+
+
+  .profile-copy {
+    display: none;
+  }
+
+
+  .desktop-logout span:last-child {
+    display: none;
+  }
+
+
+  .desktop-logout {
+    width: 38px;
+
+    padding: 0;
+  }
+
+}
+
+
+@media (max-width: 860px) {
+
+  .nav-shell {
+    height: 68px;
+  }
+
+
+  .nav-inner {
+    width:
+      min(
+        100% - 24px,
+        1440px
+      );
+  }
+
+
+  .desktop-links {
+    display: none;
+  }
+
+
+  .desktop-logout {
+    display: none;
+  }
+
+
+  .menu-btn {
+    display: grid;
+  }
+
+
+  .profile-chip {
+    display: none;
+  }
+
+}
