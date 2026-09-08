@@ -1,0 +1,57 @@
+<section class="page">
+  <div class="container">
+    <header class="page-head">
+      <div>
+        <span class="page-kicker">PAYMENT HISTORY</span>
+        <h1>Completed payments</h1>
+        <p class="muted">Review simulated payments and reopen printable receipts.</p>
+      </div>
+    </header>
+    @if (loading()) {
+      <app-loading />
+    } @else if (error()) {
+      <app-error [message]="error()" (retry)="load()" />
+    } @else if (items().length === 0) {
+      <app-empty
+        icon="₹"
+        title="No payments yet"
+        text="Completed simulated payments will appear here."
+      />
+    } @else {
+      <div class="table-wrap card">
+        <table>
+          <thead>
+            <tr>
+              <th>Reference</th>
+              <th>Booking</th>
+              <th>Date</th>
+              <th>Method</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (p of items(); track p.paymentId) {
+              <tr>
+                <td>
+                  <strong>{{ p.transactionReference }}</strong>
+                </td>
+                <td>#{{ p.bookingId }}</td>
+                <td>{{ p.paymentDate | date: 'medium' }}</td>
+                <td>{{ p.paymentMethod }}</td>
+                <td>{{ p.amount | currency: 'LKR' : 'symbol' : '1.0-0' }}</td>
+                <td><app-status-badge [label]="p.status" /></td>
+                <td>
+                  <button class="btn btn-outline btn-sm" type="button" (click)="receipt(p)">
+                    Receipt
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </div>
+</section>
