@@ -1,0 +1,74 @@
+.pay-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 350px;
+  gap: 20px;
+  align-items: start;
+}
+.payment-form {
+  padding: 28px;
+}
+.secure {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--primary);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.09em;
+}
+.secure b {
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: var(--success-soft);
+  color: var(--success);
+}
+.payment-form h2 {
+  margin: 10px 0 6px;
+}
+.payment-form > .field,
+.payment-form > .grid {
+  margin-bottom: 14px;
+}
+.wide {
+  width: 100%;
+  margin-top: 8px;
+}
+.summary {
+  position: sticky;
+  top: 94px;
+}
+.summary h2 {
+  margin: 8px 0 15px;
+}
+.line,
+.total {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 11px;
+}
+.line strong {
+  text-align: right;
+}
+.total {
+  font-size: 18px;
+  border-bottom: 0;
+}
+.notice {
+  padding: 12px;
+  border-radius: 12px;
+  background: var(--info-soft);
+  color: #285f97;
+  font-size: 10px;
+  line-height: 1.6;
+}
+@media (max-width: 850px) {
+  .pay-grid {
+    grid-template-columns: 1fr;
+  }
+  .summary {
+    position: static;
+  }
+}
