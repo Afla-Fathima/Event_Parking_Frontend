@@ -1,0 +1,467 @@
+.back {
+  margin-bottom:
+    15px;
+
+  padding:
+    0;
+
+  border:
+    0;
+
+  background:
+    transparent;
+
+  color:
+    #687790;
+
+  font-size:
+    10px;
+
+  font-weight:
+    850;
+}
+
+.back:hover {
+  color:
+    #5b4cf5;
+}
+
+.event-hero {
+  display:
+    grid;
+
+  grid-template-columns:
+    minmax(
+      380px,
+      0.92fr
+    )
+    minmax(
+      500px,
+      1.08fr
+    );
+
+  overflow:
+    hidden;
+
+  border:
+    1px solid
+    #e2e8f1;
+
+  border-radius:
+    28px;
+
+  background:
+    #ffffff;
+
+  box-shadow:
+    0 28px 75px
+    rgba(
+      28,
+      43,
+      74,
+      0.12
+    );
+}
+
+.visual-panel {
+  min-height:
+    560px;
+
+  overflow:
+    hidden;
+}
+
+.visual-panel app-event-poster {
+  display:
+    block;
+
+  width:
+    100%;
+
+  height:
+    100%;
+}
+
+.detail-panel {
+  min-width:
+    0;
+
+  padding:
+    46px;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+}
+
+.detail-topline {
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    space-between;
+
+  gap:
+    12px;
+}
+
+.category-chip {
+  padding:
+    6px 10px;
+
+  border-radius:
+    999px;
+
+  background:
+    #f0efff;
+
+  color:
+    #5b4cf5;
+
+  font-size:
+    9px;
+
+  font-weight:
+    850;
+}
+
+h1 {
+  margin:
+    14px 0 13px;
+
+  font-size:
+    clamp(
+      36px,
+      4vw,
+      52px
+    );
+}
+
+.description {
+  max-width:
+    650px;
+
+  margin-bottom:
+    0;
+
+  color:
+    #6d7b91;
+
+  font-size:
+    13px;
+
+  line-height:
+    1.75;
+}
+
+.facts {
+  display:
+    grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0, 1fr)
+    );
+
+  gap:
+    11px;
+
+  margin:
+    28px 0 24px;
+}
+
+.fact {
+  min-height:
+    76px;
+
+  padding:
+    13px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    11px;
+
+  border:
+    1px solid
+    #e7ebf2;
+
+  border-radius:
+    14px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff,
+      #fafbfe
+    );
+
+  transition:
+    0.18s ease;
+}
+
+.fact:hover {
+  transform:
+    translateY(-2px);
+
+  border-color:
+    #d5d0ff;
+
+  box-shadow:
+    0 10px 24px
+    rgba(
+      91,
+      76,
+      245,
+      0.08
+    );
+}
+
+.fact-icon {
+  flex:
+    0 0 auto;
+
+  width:
+    38px;
+
+  height:
+    38px;
+
+  display:
+    grid;
+
+  place-items:
+    center;
+
+  border-radius:
+    11px;
+
+  background:
+    #f0efff;
+
+  color:
+    #5b4cf5;
+
+  font-size:
+    10px;
+
+  font-weight:
+    950;
+}
+
+.fact > span:last-child {
+  min-width:
+    0;
+
+  display:
+    grid;
+
+  gap:
+    3px;
+}
+
+.fact small,
+.price small {
+  color:
+    #8b97aa;
+
+  font-size:
+    8px;
+
+  font-weight:
+    800;
+}
+
+.fact strong {
+  overflow:
+    hidden;
+
+  color:
+    #1d2e48;
+
+  font-size:
+    10px;
+
+  text-overflow:
+    ellipsis;
+
+  white-space:
+    nowrap;
+}
+
+.cta {
+  margin-top:
+    auto;
+
+  padding-top:
+    24px;
+
+  display:
+    flex;
+
+  align-items:
+    flex-end;
+
+  justify-content:
+    space-between;
+
+  gap:
+    18px;
+
+  border-top:
+    1px solid
+    #e8edf4;
+}
+
+.price {
+  display:
+    grid;
+
+  gap:
+    3px;
+}
+
+.price strong {
+  color:
+    #081d3b;
+
+  font-size:
+    26px;
+
+  font-weight:
+    950;
+}
+
+.book-button {
+  min-width:
+    170px;
+
+  min-height:
+    46px;
+
+  padding:
+    12px 18px;
+
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    10px;
+
+  border:
+    0;
+
+  border-radius:
+    13px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #5b4cf5,
+      #7667ff
+    );
+
+  color:
+    #ffffff;
+
+  font-weight:
+    900;
+
+  box-shadow:
+    0 12px 30px
+    rgba(
+      91,
+      76,
+      245,
+      0.25
+    );
+
+  transition:
+    0.18s ease;
+}
+
+.book-button:hover {
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 16px 36px
+    rgba(
+      91,
+      76,
+      245,
+      0.32
+    );
+}
+
+.book-button span {
+  font-size:
+    18px;
+}
+
+@media (max-width: 980px) {
+
+  .event-hero {
+    grid-template-columns:
+      1fr;
+  }
+
+  .visual-panel {
+    min-height:
+      390px;
+  }
+
+}
+
+@media (max-width: 620px) {
+
+  .event-hero {
+    border-radius:
+      21px;
+  }
+
+  .visual-panel {
+    min-height:
+      290px;
+  }
+
+  .detail-panel {
+    padding:
+      24px;
+  }
+
+  .facts {
+    grid-template-columns:
+      1fr;
+  }
+
+  .cta {
+    align-items:
+      stretch;
+
+    flex-direction:
+      column;
+  }
+
+  .book-button {
+    width:
+      100%;
+  }
+
+}

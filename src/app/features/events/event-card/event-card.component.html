@@ -1,0 +1,126 @@
+<article
+  class="event-card"
+  appHighlight
+>
+
+  <button
+    class="poster-button"
+    type="button"
+    (click)="open.emit(event.eventId)"
+  >
+
+    <app-event-poster
+      [event]="event"
+    />
+
+  </button>
+
+
+  <div class="content">
+
+    <div class="meta-row">
+
+      <span class="venue">
+        {{ event.venueName }}
+      </span>
+
+      <span class="category">
+        {{ event.categoryName }}
+      </span>
+
+    </div>
+
+
+    <h3>
+      {{ event.eventName }}
+    </h3>
+
+
+    <p class="description">
+
+      {{
+        event.description
+          | shortText: 96
+      }}
+
+    </p>
+
+
+    <div class="event-facts">
+
+      <span>
+
+        <small>
+          Date
+        </small>
+
+        <strong>
+
+          {{
+            event.eventDate
+              | date:
+                  'dd MMM yyyy'
+          }}
+
+        </strong>
+
+      </span>
+
+
+      <span>
+
+        <small>
+          Time
+        </small>
+
+        <strong>
+          {{ event.startTime }}
+        </strong>
+
+      </span>
+
+    </div>
+
+
+    <div class="bottom">
+
+      <div class="price">
+
+        <small>
+          Tickets from
+        </small>
+
+        <strong>
+
+          {{
+            event.ticketPrice
+              | currency:
+                  'LKR':
+                  'symbol':
+                  '1.0-0'
+          }}
+
+        </strong>
+
+      </div>
+
+
+      <button
+        class="view-button"
+        type="button"
+        (click)="open.emit(event.eventId)"
+      >
+
+        View details
+
+        <span>
+          →
+        </span>
+
+      </button>
+
+    </div>
+
+  </div>
+
+</article>
