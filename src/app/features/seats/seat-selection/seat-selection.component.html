@@ -1,0 +1,148 @@
+<section class="seat-page">
+  <div class="container seat-container">
+    <header class="seat-hero">
+      <div class="hero-main">
+        <div class="step-chip">BOOKING · STEP 1 OF 3</div>
+        <h1>Choose the perfect seats</h1>
+        <p>
+          {{ event()?.eventName || 'Event' }} · a clean, interactive map with only valid A–T rows
+          and a premium 200-seat display limit.
+        </p>
+      </div>
+
+      <button class="back-button" type="button" (click)="back()">
+        <span>←</span>
+        <span><small>Back to</small><strong>Event details</strong></span>
+      </button>
+
+      <div class="flow-strip">
+        <div class="flow-step active"><b>1</b><span>Seats</span></div>
+        <i></i>
+        <div class="flow-step"><b>2</b><span>Parking</span></div>
+        <i></i>
+        <div class="flow-step"><b>3</b><span>Review</span></div>
+      </div>
+    </header>
+
+    @if (loading()) {
+      <app-loading text="Preparing your premium seat map…" />
+    } @else if (error()) {
+      <app-error [message]="error()" (retry)="load()" />
+    } @else if (displaySeats().length === 0) {
+      <app-empty
+        icon="S"
+        title="Seat map not configured"
+        text="An administrator needs to create a valid A–T seat layout for this event."
+      />
+    } @else {
+      <div class="booking-layout">
+        <section class="map-card">
+          <div class="map-topbar">
+            <div>
+              <span class="eyebrow">LIVE SEAT MAP</span>
+              <h2>{{ displaySeats().length }} seats ready</h2>
+            </div>
+            <div class="map-stats">
+              <span><b>{{ availableCount() }}</b> available</span>
+              <span><b>{{ occupiedCount() }}</b> reserved</span>
+              <span><b>{{ state.seatCount() }}</b> selected</span>
+            </div>
+          </div>
+
+          <div class="auditorium">
+            <div class="stage-glow"></div>
+            <div class="screen">
+              <span>STAGE / SCREEN</span>
+              <small>Best viewing direction</small>
+            </div>
+
+            <div class="legend">
+              <span><i class="available"></i>Available</span>
+              <span><i class="selected"></i>Selected</span>
+              <span><i class="occupied"></i>Booked / reserved</span>
+            </div>
+
+            <div class="seat-scroll">
+              <div class="seat-rows">
+                @for (row of rows(); track row.label) {
+                  <div class="seat-row">
+                    <span class="row-label">{{ row.label }}</span>
+                    <div class="seat-row-grid">
+                      @for (seat of row.seats; track seat.seatId) {
+                        <app-seat-button
+                          [seat]="seat"
+                          [selected]="isSelected(seat)"
+                          (toggled)="toggle($event)"
+                        />
+                      }
+                    </div>
+                    <span class="row-label right">{{ row.label }}</span>
+                  </div>
+                }
+              </div>
+            </div>
+
+            <div class="map-foot">
+              <span>ENTRANCE</span>
+              <i></i>
+              <span>Premium aisle layout</span>
+              <i></i>
+              <span>Max 200 seats</span>
+            </div>
+          </div>
+        </section>
+
+        <aside class="summary-card">
+          <div class="summary-head">
+            <span class="eyebrow">YOUR SELECTION</span>
+            <span class="summary-count">{{ state.seatCount() }}</span>
+          </div>
+
+          <h2>Booking summary</h2>
+          <p class="summary-copy">
+            Pick one or more available seats. Your running total updates instantly.
+          </p>
+
+          @if (state.seatCount() === 0) {
+            <div class="empty-selection">
+              <div class="empty-icon">S</div>
+              <strong>No seats selected</strong>
+              <span>Tap an available seat on the map to begin.</span>
+            </div>
+          } @else {
+            <div class="selected-list">
+              @for (seat of state.selectedSeats(); track seat.seatId) {
+                <button type="button" (click)="toggle(seat)">
+                  <span>
+                    <b>{{ seat.seatNumber }}</b>
+                    <small>{{ seat.seatType }}</small>
+                  </span>
+                  <strong>{{ seat.price | currency: 'LKR' : 'symbol' : '1.0-0' }}</strong>
+                </button>
+              }
+            </div>
+          }
+
+          <div class="price-box">
+            <span>
+              <small>Seat subtotal</small>
+              <b>{{ state.seatCount() }} selected</b>
+            </span>
+            <strong>{{ state.seatTotal() | currency: 'LKR' : 'symbol' : '1.0-0' }}</strong>
+          </div>
+
+          <button
+            class="continue-button"
+            type="button"
+            [disabled]="state.seatCount() === 0"
+            (click)="continue()"
+          >
+            <span>Continue to parking</span><b>→</b>
+          </button>
+
+          <p class="secure-note"><span>✓</span> Availability is verified again when you confirm.</p>
+        </aside>
+      </div>
+    }
+  </div>
+</section>
