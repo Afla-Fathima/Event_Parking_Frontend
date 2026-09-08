@@ -1,0 +1,5 @@
+<div class="route-progress" [class.visible]="navigating()"></div>
+@if (!authPage()) {
+  <app-navbar />
+}
+<main [class.app-main]="!authPage()"><router-outlet /></main>

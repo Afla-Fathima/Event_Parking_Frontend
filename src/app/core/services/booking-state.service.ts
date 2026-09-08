@@ -6,6 +6,7 @@ export class BookingStateService {
   readonly event = signal<EventItem | null>(null);
   readonly selectedSeats = signal<Seat[]>([]);
   readonly parking = signal<ParkingSlot | null>(null);
+  readonly notice = signal('');
   readonly seatTotal = computed(() =>
     this.selectedSeats().reduce((sum, seat) => sum + Number(seat.price), 0),
   );
@@ -17,6 +18,7 @@ export class BookingStateService {
     if (this.event()?.eventId !== event.eventId) {
       this.selectedSeats.set([]);
       this.parking.set(null);
+      this.notice.set('');
     }
     this.event.set(event);
   }
@@ -33,6 +35,7 @@ export class BookingStateService {
     this.parking.set(slot);
   }
   clear(): void {
+    this.notice.set('');
     this.event.set(null);
     this.selectedSeats.set([]);
     this.parking.set(null);
