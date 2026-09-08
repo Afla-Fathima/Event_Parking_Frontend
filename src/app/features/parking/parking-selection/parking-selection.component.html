@@ -1,0 +1,83 @@
+<section class="page">
+  <div class="container">
+    <header class="page-head">
+      <div>
+        <span class="page-kicker">STEP 2 OF 3 · PARKING</span>
+        <h1>Add parking if you need it</h1>
+        <p class="muted">
+          Parking is optional. You can select one available slot, change it, or continue without
+          parking.
+        </p>
+      </div>
+      <button class="btn btn-outline" type="button" (click)="back()">← Seats</button>
+    </header>
+    @if (loading()) {
+      <app-loading text="Loading parking layout…" />
+    } @else if (error()) {
+      <app-error [message]="error()" (retry)="load()" />
+    } @else {
+      <div class="booking-layout">
+        <section class="map-card card panel">
+          <div class="lane"><span>ENTRY</span><i></i><span>EXIT</span></div>
+          <div class="legend">
+            <span><i class="available"></i>Available</span
+            ><span><i class="selected"></i>Selected</span
+            ><span><i class="occupied"></i>Occupied</span>
+          </div>
+          @if (slots().length === 0) {
+            <app-empty
+              icon="P"
+              title="Parking layout not configured"
+              text="You can still continue because parking is optional."
+            />
+          } @else {
+            <div class="slot-scroll">
+              <div class="slot-grid">
+                @for (slot of slots(); track slot.parkingSlotId) {
+                  <app-parking-slot-button
+                    [slot]="slot"
+                    [selected]="selected(slot)"
+                    (toggled)="toggle($event)"
+                  />
+                }
+              </div>
+            </div>
+          }
+        </section>
+        <aside class="summary card panel">
+          <span class="page-kicker">BOOKING SUMMARY</span>
+          <h2>{{ state.seatCount() }} seat{{ state.seatCount() === 1 ? '' : 's' }}</h2>
+          <div class="summary-row">
+            <span>Seats</span
+            ><strong>{{ state.seatTotal() | currency: 'LKR' : 'symbol' : '1.0-0' }}</strong>
+          </div>
+          @if (state.parking(); as p) {
+            <div class="parking-picked">
+              <div>
+                <b>P</b
+                ><span
+                  ><strong>{{ p.slotNumber }}</strong
+                  ><small>{{ p.vehicleType }}</small></span
+                >
+              </div>
+              <button type="button" (click)="state.selectParking(null)">Remove</button>
+            </div>
+            <div class="summary-row">
+              <span>Parking</span
+              ><strong>{{ state.parkingTotal() | currency: 'LKR' : 'symbol' : '1.0-0' }}</strong>
+            </div>
+          } @else {
+            <div class="optional">No parking selected <span>Optional</span></div>
+          }
+          <div class="total">
+            <span>Total</span
+            ><strong>{{ state.total() | currency: 'LKR' : 'symbol' : '1.0-0' }}</strong>
+          </div>
+          <button class="btn btn-primary wide" type="button" (click)="continue()">
+            Review booking →
+          </button>
+        </aside>
+      </div>
+    }
+  </div>
+</section>
