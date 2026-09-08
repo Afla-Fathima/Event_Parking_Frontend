@@ -1,0 +1,65 @@
+.profile-container {
+  max-width: 900px;
+}
+.profile-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 18px;
+  align-items: start;
+}
+.identity {
+  text-align: center;
+  display: grid;
+  place-items: center;
+}
+.avatar {
+  width: 82px;
+  height: 82px;
+  display: grid;
+  place-items: center;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #625df5, #7e79ff);
+  color: #fff;
+  font-size: 32px;
+  font-weight: 900;
+  margin-bottom: 14px;
+}
+.identity h2 {
+  margin: 0 0 4px;
+}
+.identity p {
+  color: var(--muted);
+  font-size: 11px;
+}
+.identity span {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  color: var(--primary);
+  font-size: 10px;
+  font-weight: 900;
+}
+.identity small {
+  margin-top: 10px;
+  color: var(--muted);
+}
+.msg {
+  padding: 11px 13px;
+  border-radius: 11px;
+  margin-bottom: 12px;
+  font-size: 11px;
+  font-weight: 800;
+}
+.msg.error {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+.msg.success {
+  background: var(--success-soft);
+  color: var(--success);
+}
+@media (max-width: 700px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}
