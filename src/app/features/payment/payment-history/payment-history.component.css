@@ -1,3 +1,15 @@
+.table-wrap {
+  border-color: rgba(79,132,234,.12);
+  background: linear-gradient(145deg, rgba(13,21,37,.96), rgba(5,9,17,.99));
+  box-shadow: 0 18px 48px rgba(0,0,0,.30);
+}
+
 td strong {
+  color: #dbe7f8;
   font-size: 11px;
+}
+
+td:nth-child(5) {
+  color: #79acff;
+  font-weight: 900;
 }

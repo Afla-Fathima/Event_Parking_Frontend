@@ -1,143 +1,99 @@
 .event-select {
-  min-width: 280px;
+  width: min(360px,100%);
 }
+
 .message {
-  padding: 12px 14px;
-  border-radius: 12px;
   margin-bottom: 14px;
-  font-size: 11px;
-  font-weight: 800;
 }
-.message.error {
-  background: var(--danger-soft);
-  color: var(--danger);
-}
-.message.success {
-  background: var(--success-soft);
-  color: var(--success);
-}
+
 .inventory-summary {
-  margin-bottom: 18px;
+  margin-bottom: 20px;
 }
-.inventory-summary article {
-  display: grid;
-  gap: 3px;
+
+.inventory-summary .card {
+  padding: 16px;
 }
-.inventory-summary span,
-.inventory-summary small {
-  color: var(--muted);
-  font-size: 10px;
-}
-.inventory-summary strong {
-  font-size: 26px;
-}
+
 .inventory-grid {
   display: grid;
-  gap: 18px;
+  grid-template-columns: minmax(0,1fr) minmax(0,.78fr);
+  gap: 20px;
 }
+
 .section-head {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 14px;
+  margin-bottom: 15px;
 }
+
 .section-head h2 {
-  margin: 5px 0;
+  margin: 0;
 }
+
 .legend {
   display: flex;
-  gap: 9px;
-  flex-wrap: wrap;
-  margin: 10px 0 16px;
+  gap: 12px;
+  margin: 10px 0 14px;
+  color: #6f8b81;
+  font-size: 8px;
 }
-.legend span {
-  padding: 6px 9px;
-  border-radius: 999px;
-  background: #f1f4f8;
-  color: #6f7c91;
-  font-size: 9px;
-  font-weight: 800;
-}
+
 .seat-admin-scroll {
   overflow: auto;
 }
+
 .seat-admin-grid {
+  min-width: 610px;
   display: grid;
-  grid-template-columns: repeat(10, 70px);
-  gap: 8px;
-  width: max-content;
-  min-width: 100%;
-  justify-content: center;
+  grid-template-columns: repeat(10, minmax(48px,1fr));
+  gap: 7px;
 }
-.seat-tile {
-  height: 62px;
-  border: 1px solid #d8e0eb;
+
+.seat-tile,
+.parking-tile {
+  padding: 9px;
+  border: 1px solid rgba(33,230,162,.10);
   border-radius: 10px;
-  display: grid;
-  place-items: center;
-  align-content: center;
-  background: #fff;
+  color: #bcd5cb;
+  background: rgba(255,255,255,.018);
+  text-align: center;
+  font-size: 8px;
 }
-.seat-tile strong {
-  font-size: 11px;
+
+.seat-tile.available,
+.parking-tile.available {
+  border-color: rgba(33,230,162,.18);
+  color: #5af3bb;
+  background: rgba(33,230,162,.05);
 }
-.seat-tile span,
-.seat-tile small {
-  font-size: 7px;
-  color: var(--muted);
+
+.seat-tile.booked,
+.parking-tile.occupied {
+  color: #587068;
+  background: rgba(255,255,255,.03);
 }
-.seat-tile.locked {
-  background: #eef1f5;
-  color: #909bad;
-}
+
 .parking-admin-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4,minmax(105px,1fr));
   gap: 9px;
 }
-.parking-tile {
-  min-height: 68px;
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  padding: 10px;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 8px;
-}
-.parking-tile > b {
-  width: 34px;
-  height: 40px;
-  display: grid;
-  place-items: center;
-  border-radius: 9px;
-  background: var(--info-soft);
-  color: var(--info);
-}
-.parking-tile span {
-  display: grid;
-}
-.parking-tile small {
-  font-size: 8px;
-  color: var(--muted);
-}
-.parking-tile.locked {
-  background: #f0f2f5;
-}
-@media (max-width: 850px) {
-  .parking-admin-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .event-select {
-    min-width: 100%;
-  }
-}
-@media (max-width: 500px) {
-  .parking-admin-grid {
+
+@media (max-width: 900px) {
+  .inventory-grid {
     grid-template-columns: 1fr;
   }
+}
+
+@media (max-width: 560px) {
   .section-head {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .parking-admin-grid {
+    grid-template-columns: repeat(2,minmax(100px,1fr));
   }
 }

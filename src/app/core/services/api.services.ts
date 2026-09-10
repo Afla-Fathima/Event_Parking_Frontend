@@ -1,6 +1,10 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import {
+  Observable,
+  shareReplay,
+  tap
+} from 'rxjs';
 import { environment } from '../../../environments/environment';
 import {
   AdminDashboard,
@@ -178,20 +182,110 @@ export class DashboardService {
   }
 }
 
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class VenueService {
-  constructor(private readonly http: HttpClient) {}
-  list(): Observable<Venue[]> {
-    return this.http.get<Venue[]>(`${API}/venues`);
+
+  private cache$?:
+    Observable<Venue[]>;
+
+
+  constructor(
+    private readonly http:
+      HttpClient
+  ) {}
+
+
+  list():
+    Observable<Venue[]> {
+
+    /*
+     * First call API.
+     * Next components cached result use pannum.
+     */
+    if (!this.cache$) {
+
+      this.cache$ =
+        this.http
+          .get<Venue[]>(
+            `${API}/venues`
+          )
+          .pipe(
+            shareReplay({
+              bufferSize: 1,
+              refCount: false
+            })
+          );
+    }
+
+
+    return this.cache$;
   }
-  create(value: VenueWrite): Observable<Venue> {
-    return this.http.post<Venue>(`${API}/venues`, value);
+
+
+  create(
+    value: VenueWrite
+  ):
+    Observable<Venue> {
+
+    return this.http
+      .post<Venue>(
+        `${API}/venues`,
+        value
+      )
+      .pipe(
+        tap(
+          () =>
+            this.invalidateCache()
+        )
+      );
   }
-  update(id: number, value: VenueWrite): Observable<Venue> {
-    return this.http.put<Venue>(`${API}/venues/${id}`, value);
+
+
+  update(
+    id: number,
+    value: VenueWrite
+  ):
+    Observable<Venue> {
+
+    return this.http
+      .put<Venue>(
+        `${API}/venues/${id}`,
+        value
+      )
+      .pipe(
+        tap(
+          () =>
+            this.invalidateCache()
+        )
+      );
   }
-  delete(id: number): Observable<void> {
-    return this.http.delete<void>(`${API}/venues/${id}`);
+
+
+  delete(
+    id: number
+  ):
+    Observable<void> {
+
+    return this.http
+      .delete<void>(
+        `${API}/venues/${id}`
+      )
+      .pipe(
+        tap(
+          () =>
+            this.invalidateCache()
+        )
+      );
+  }
+
+
+  invalidateCache():
+    void {
+
+    this.cache$ =
+      undefined;
   }
 }
 

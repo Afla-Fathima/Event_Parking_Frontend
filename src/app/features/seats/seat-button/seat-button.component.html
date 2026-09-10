@@ -1,14 +1,49 @@
 <button
   type="button"
-  class="seat"
-  [ngClass]="{ selected: selected, occupied: !available() }"
-  [disabled]="!available()"
+
+  class="seat-button"
+
   [appSeatStatus]="seat.status"
-  (click)="click()"
-  [attr.aria-label]="'Seat ' + seat.seatNumber + ', ' + (selected ? 'selected' : seat.status)"
+
+  [ngClass]="{
+    'seat-available':
+      available && !selected,
+
+    'seat-selected':
+      selected,
+
+    'seat-booked':
+      !available
+  }"
+
+  [disabled]="!available"
+
+  [attr.aria-label]="
+    (seat.seatNumber | seatLabel) +
+    (
+      selected
+        ? ' selected'
+        : available
+          ? ' available'
+          : ' booked'
+    )
+  "
+
+  [attr.aria-pressed]="selected"
+
+  (click)="clickSeat()"
 >
-  <span class="seat-back">
-    <strong>{{ seat.seatNumber | seatLabel }}</strong>
+
+  @if (selected) {
+
+    <span class="selected-check">
+      ✓
+    </span>
+
+  }
+
+  <span class="seat-number">
+    {{ seat.seatNumber | seatLabel }}
   </span>
-  <small>{{ selected ? 'Selected' : seat.status }}</small>
+
 </button>
