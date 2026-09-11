@@ -39,42 +39,419 @@
   color: #6f8b81;
   font-size: 8px;
 }
+/* =========================================
+   PREMIUM ADMIN SEAT MAP
+========================================= */
 
 .seat-admin-scroll {
-  overflow: auto;
+  width: 100%;
+
+  overflow-x: auto;
+
+  overflow-y: hidden;
+
+  padding:
+    10px
+    4px
+    18px;
+
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    #3784f8
+    rgba(
+      255,
+      255,
+      255,
+      0.05
+    );
 }
+
+
+.seat-admin-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+
+.seat-admin-scroll::-webkit-scrollbar-track {
+  border-radius: 999px;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.04
+    );
+}
+
+
+.seat-admin-scroll::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #1e5fc9,
+      #4c96ff
+    );
+}
+
+
+/* =========================================
+   10 SEATS PER ROW
+========================================= */
 
 .seat-admin-grid {
-  min-width: 610px;
+  width: max-content;
+
+  min-width: 100%;
+
   display: grid;
-  grid-template-columns: repeat(10, minmax(48px,1fr));
-  gap: 7px;
+
+  grid-template-columns:
+    repeat(
+      10,
+      72px
+    );
+
+  gap: 10px;
+
+  justify-content: start;
+
+  align-items: center;
 }
 
-.seat-tile,
-.parking-tile {
-  padding: 9px;
-  border: 1px solid rgba(33,230,162,.10);
-  border-radius: 10px;
-  color: #bcd5cb;
-  background: rgba(255,255,255,.018);
-  text-align: center;
+
+/* =========================================
+   SEAT
+========================================= */
+
+.seat-tile {
+  position: relative;
+
+  width: 72px;
+  height: 58px;
+
+  display: grid;
+
+  place-items: center;
+
+  border:
+    1px solid
+    rgba(
+      76,
+      137,
+      240,
+      0.18
+    );
+
+  border-radius:
+    14px 14px 8px 8px;
+
+  color: #cbd9ed;
+
+  background:
+    linear-gradient(
+      180deg,
+      #12213a 0%,
+      #091321 100%
+    );
+
+  box-shadow:
+    inset 0 1px 0
+    rgba(
+      255,
+      255,
+      255,
+      0.04
+    ),
+
+    0 8px 18px
+    rgba(
+      0,
+      0,
+      0,
+      0.18
+    );
+
+  transition:
+    transform 0.16s ease,
+    border-color 0.16s ease,
+    background 0.16s ease,
+    box-shadow 0.16s ease;
+}
+
+
+/* seat cushion look */
+
+.seat-tile::before {
+  content: "";
+
+  position: absolute;
+
+  left: 9px;
+  right: 9px;
+  bottom: 7px;
+
+  height: 7px;
+
+  border-radius:
+    3px 3px 6px 6px;
+
+  background:
+    rgba(
+      105,
+      157,
+      234,
+      0.09
+    );
+}
+
+
+/* top blue highlight */
+
+.seat-tile::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+
+  left: 13px;
+  right: 13px;
+
+  height: 2px;
+
+  border-radius:
+    0 0 999px 999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #5599ff,
+      transparent
+    );
+
+  opacity: 0.75;
+}
+
+
+/* =========================================
+   NUMBER
+========================================= */
+
+.seat-number {
+  position: relative;
+
+  z-index: 2;
+
+  color: #eef5ff;
+
+  font-size: 11px;
+
+  font-weight: 900;
+
+  letter-spacing:
+    0.04em;
+}
+
+
+/* =========================================
+   AVAILABLE
+========================================= */
+
+.seat-tile.available {
+  border-color:
+    rgba(
+      65,
+      137,
+      255,
+      0.25
+    );
+
+  background:
+    radial-gradient(
+      circle at 50% 0%,
+      rgba(
+        59,
+        130,
+        246,
+        0.13
+      ),
+      transparent 60%
+    ),
+
+    linear-gradient(
+      180deg,
+      #10213c,
+      #081321
+    );
+}
+
+
+.seat-tile.available:hover {
+  transform:
+    translateY(-3px);
+
+  border-color:
+    rgba(
+      87,
+      157,
+      255,
+      0.68
+    );
+
+  background:
+    linear-gradient(
+      180deg,
+      #18366a,
+      #0b1d38
+    );
+
+  box-shadow:
+    0 11px 26px
+    rgba(
+      28,
+      89,
+      204,
+      0.24
+    ),
+
+    0 0 20px
+    rgba(
+      59,
+      130,
+      246,
+      0.10
+    );
+}
+
+
+/* =========================================
+   BOOKED / RESERVED
+========================================= */
+
+.seat-tile.booked {
+  color: #5c6d86;
+
+  border-color:
+    rgba(
+      255,
+      255,
+      255,
+      0.055
+    );
+
+  background:
+    linear-gradient(
+      180deg,
+      #111721,
+      #090d13
+    );
+
+  box-shadow: none;
+
+  opacity: 0.58;
+}
+
+
+.seat-tile.booked::after {
+  background:
+    #68758a;
+
+  opacity: 0.22;
+}
+
+
+.seat-tile.booked
+.seat-number {
+  color: #6c7b91;
+}
+
+
+/* =========================================
+   BOOKED X ICON
+========================================= */
+
+.seat-lock {
+  position: absolute;
+
+  z-index: 4;
+
+  top: 5px;
+  right: 6px;
+
+  width: 15px;
+  height: 15px;
+
+  display: grid;
+
+  place-items: center;
+
+  border-radius: 50%;
+
+  color: #8794a9;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      0.06
+    );
+
   font-size: 8px;
+
+  font-weight: 900;
 }
 
-.seat-tile.available,
-.parking-tile.available {
-  border-color: rgba(33,230,162,.18);
-  color: #5af3bb;
-  background: rgba(33,230,162,.05);
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
+
+  .seat-admin-grid {
+    grid-template-columns:
+      repeat(
+        10,
+        68px
+      );
+
+    gap: 9px;
+  }
+
+
+  .seat-tile {
+    width: 68px;
+    height: 56px;
+  }
+
 }
 
-.seat-tile.booked,
-.parking-tile.occupied {
-  color: #587068;
-  background: rgba(255,255,255,.03);
-}
 
+@media (max-width: 520px) {
+
+  .seat-admin-grid {
+    grid-template-columns:
+      repeat(
+        10,
+        64px
+      );
+
+    gap: 8px;
+  }
+
+
+  .seat-tile {
+    width: 64px;
+    height: 53px;
+  }
+
+}
 .parking-admin-grid {
   display: grid;
   grid-template-columns: repeat(4,minmax(105px,1fr));

@@ -1,5 +1,5 @@
-import { Component, inject, signal } from '@angular/core';
-import { CurrencyPipe } from '@angular/common';
+import { Component, computed, inject, signal } from '@angular/core';
+
 import { FormsModule } from '@angular/forms';
 import { concatMap, from, toArray } from 'rxjs';
 import {
@@ -18,7 +18,7 @@ import { StatusBadgeComponent } from '../../../shared/components/status-badge/st
 @Component({
   selector: 'app-inventory',
   standalone: true,
-  imports: [FormsModule, CurrencyPipe, EmptyComponent, LoadingComponent, StatusBadgeComponent],
+  imports: [FormsModule, ],
   templateUrl: './inventory.component.html',
   styleUrl: './inventory.component.css',
 })
@@ -203,6 +203,23 @@ export class AdminInventoryComponent {
           this.error.set(e.error?.message ?? 'Parking generation stopped.');
           this.loadInventory();
         },
+      
       });
+      
   }
+  readonly sortedSeats = computed(() => {
+
+    return [...this.seats()].sort(
+      (a, b) =>
+        a.seatNumber.localeCompare(
+          b.seatNumber,
+          undefined,
+          {
+            numeric: true,
+            sensitivity: 'base',
+          },
+        ),
+    );
+  
+  });
 }
