@@ -1,0 +1,12 @@
+<button
+  type="button"
+  class="slot"
+  [ngClass]="{ selected: selected, occupied: !available() }"
+  [disabled]="!available()"
+  (click)="click()"
+  [attr.aria-label]="'Parking ' + slot.slotNumber + ', ' + (selected ? 'selected' : slot.status)"
+>
+  <b>P</b><span>{{ slot.slotNumber | slotCode }}</span
+  ><small>{{ slot.vehicleType }} · {{ selected ? 'Selected' : slot.status }}</small>
+</button>
+

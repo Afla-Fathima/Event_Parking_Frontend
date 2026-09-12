@@ -1,0 +1,102 @@
+<section class="page">
+  <div class="container">
+    <header class="page-head">
+      <div>
+        <span class="page-kicker">STEP 3 OF 3 · REVIEW</span>
+        <h1>Review and create booking</h1>
+        <p class="muted">
+          Your seats are only secured when the API creates the booking. Payment confirms it.
+        </p>
+      </div>
+      <button class="btn btn-outline" type="button" (click)="back()">← Parking</button>
+    </header>
+    @if (error()) {
+      <div class="error-banner">{{ error() }}</div>
+    }
+    @if (state.event(); as e) {
+      <div class="checkout-grid">
+        <section class="card panel">
+          <div class="event-line">
+            <div class="date">
+              <strong>{{ e.eventDate | date: 'dd' }}</strong
+              ><span>{{ e.eventDate | date: 'MMM' }}</span>
+            </div>
+            <div>
+              <span class="page-kicker">{{ e.venueName }}</span>
+              <h2>{{ e.eventName }}</h2>
+              <p class="muted">{{ e.eventDate | date: 'fullDate' }} · {{ e.startTime }}</p>
+            </div>
+          </div>
+          <hr />
+          <h3>Attendee names</h3>
+          <p class="muted small">
+            This demonstrates the checkout FormArray. Names are kept only in the Angular form and
+            are not sent because the current API booking DTO accepts event, seats and optional
+            parking only.
+          </p>
+          <form [formGroup]="form">
+            <div formArrayName="attendees" class="attendees">
+              @for (seat of state.selectedSeats(); track seat.seatId; let i = $index) {
+                <div class="attendee">
+                  <div class="seat-tag">{{ seat.seatNumber }}</div>
+                  <div class="field">
+                    <label>Attendee name</label
+                    ><input
+                      class="input"
+                      [formControlName]="i"
+                      placeholder="Name for {{ seat.seatNumber }}"
+                    />
+                    @if (attendees.at(i).touched && attendees.at(i).invalid) {
+                      <span class="field-error">Name is required.</span>
+                    }
+                  </div>
+                  <strong>{{ seat.price | currency: 'LKR' : 'symbol' : '1.0-0' }}</strong>
+                </div>
+              }
+            </div>
+          </form>
+        </section>
+        <aside class="card panel summary">
+          <span class="page-kicker">ORDER SUMMARY</span>
+          <h2>{{ state.seatCount() }} seat{{ state.seatCount() === 1 ? '' : 's' }}</h2>
+          <div class="line">
+            <span>Seat total</span
+            ><strong>{{ state.seatTotal() | currency: 'LKR' : 'symbol' : '1.0-0' }}</strong>
+          </div>
+          @if (state.parking(); as p) {
+            <div class="line">
+              <span>Parking · {{ p.slotNumber }}</span
+              ><strong>{{ p.fee | currency: 'LKR' : 'symbol' : '1.0-0' }}</strong>
+            </div>
+          } @else {
+            <div class="optional">No parking selected <b>Optional</b></div>
+          }
+          <div class="total">
+            <span>Total due</span
+            ><strong>{{ state.total() | currency: 'LKR' : 'symbol' : '1.0-0' }}</strong>
+          </div>
+          <p class="hold">
+            A new booking starts as <b>Pending</b>. Complete simulated payment before the backend
+            hold expires.
+          </p>
+          <button
+            class="btn btn-primary wide"
+            type="button"
+            [disabled]="busy()"
+            (click)="askConfirm()"
+          >
+            {{ busy() ? 'Creating…' : 'Create booking & continue' }}
+          </button>
+        </aside>
+      </div>
+    }
+    <app-confirm-dialog
+      [open]="confirmOpen()"
+      title="Create this booking?"
+      message="The API will re-check seat and parking availability. Continue to create a pending booking?"
+      confirmText="Create booking"
+      (confirm)="create()"
+      (cancel)="confirmOpen.set(false)"
+    />
+  </div>
+</section>

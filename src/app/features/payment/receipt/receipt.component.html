@@ -1,0 +1,159 @@
+<div class="receipt-page">
+
+  <div class="print-area">
+
+    <div class="receipt-card">
+
+      <div class="receipt-header">
+
+        <div class="logo">
+          P
+        </div>
+
+        <div>
+          <h1>ParkFlow</h1>
+          <p>Event & Parking Reservation</p>
+        </div>
+
+        <span class="paid">
+          PAID
+        </span>
+
+      </div>
+
+
+      <div class="amount-section">
+
+        <span>Total Paid</span>
+
+        <h2>
+          {{receipt()?.amount | currency:'LKR ':'symbol':'1.2-2'}}
+        </h2>
+
+      </div>
+
+
+
+      <div class="details-grid">
+
+
+        <div class="detail-box">
+
+          <label>
+            Booking Number
+          </label>
+
+          <strong>
+            {{receipt()?.bookingNumber}}
+          </strong>
+
+        </div>
+
+
+
+        <div class="detail-box">
+
+          <label>
+            Customer
+          </label>
+
+          <strong>
+            {{receipt()?.customerName}}
+          </strong>
+
+        </div>
+
+
+
+
+        <div class="detail-box">
+
+          <label>
+            Event
+          </label>
+
+          <strong>
+            {{receipt()?.eventName}}
+          </strong>
+
+        </div>
+
+
+
+
+        <div class="detail-box">
+
+          <label>
+            Payment Date
+          </label>
+
+          <strong>
+            {{receipt()?.paymentDate | date}}
+          </strong>
+
+        </div>
+
+
+
+
+        <div class="detail-box">
+
+          <label>
+            Payment Method
+          </label>
+
+          <strong>
+            {{receipt()?.paymentMethod}}
+          </strong>
+
+        </div>
+
+
+
+
+        <div class="detail-box">
+
+          <label>
+            Reference
+          </label>
+
+          <strong>
+            {{receipt()?.transactionReference}}
+          </strong>
+
+        </div>
+
+
+      </div>
+
+
+
+
+      <div class="footer">
+
+        Payment simulation receipt -
+        Event & Parking Reservation System
+
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+
+  <div class="actions">
+
+    <button
+      (click)="printReceipt()">
+
+      Print / Save PDF
+
+    </button>
+
+  </div>
+
+
+</div>

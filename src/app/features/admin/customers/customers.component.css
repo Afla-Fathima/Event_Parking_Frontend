@@ -1,0 +1,20 @@
+.search {
+  display: flex;
+  gap: 8px;
+  min-width: min(430px, 100%);
+}
+.search .input {
+  min-width: 0;
+}
+.table-wrap td small {
+  display: block;
+  color: var(--muted);
+  font-size: 9px;
+  margin-top: 3px;
+}
+@media (max-width: 650px) {
+  .search {
+    width: 100%;
+    min-width: 0;
+  }
+}

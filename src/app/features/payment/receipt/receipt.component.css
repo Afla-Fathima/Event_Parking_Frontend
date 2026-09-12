@@ -1,0 +1,297 @@
+.receipt-page{
+  min-height:100vh;
+  background:#020617;
+  padding:40px;
+  color:#ffffff;
+}
+
+
+.receipt-card{
+
+  max-width:900px;
+  margin:auto;
+
+  background:#0f172a;
+
+  border:1px solid #1e3a8a;
+
+  border-radius:24px;
+
+  padding:40px;
+
+  box-shadow:
+  0 20px 50px rgba(0,0,0,.5);
+}
+
+
+
+.receipt-header{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:20px;
+
+  border-bottom:
+  1px solid #1e293b;
+
+  padding-bottom:25px;
+
+}
+
+
+
+.logo{
+
+  width:55px;
+  height:55px;
+
+  border-radius:15px;
+
+  background:#2563eb;
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  font-size:30px;
+
+  font-weight:900;
+}
+
+
+
+.receipt-header h1{
+
+  margin:0;
+
+  font-size:32px;
+
+}
+
+
+.receipt-header p{
+
+  color:#94a3b8;
+
+}
+
+
+
+.paid{
+
+  margin-left:auto;
+
+  background:#065f46;
+
+  color:#34d399;
+
+  padding:8px 20px;
+
+  border-radius:20px;
+
+  font-weight:bold;
+}
+
+
+
+.amount-section{
+
+  text-align:center;
+
+  padding:40px 0;
+
+}
+
+
+.amount-section span{
+
+  color:#94a3b8;
+
+}
+
+
+.amount-section h2{
+
+  color:#60a5fa;
+
+  font-size:48px;
+
+}
+
+
+
+.details-grid{
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(2,1fr);
+
+  gap:20px;
+
+}
+
+
+
+.detail-box{
+
+  background:#111827;
+
+  padding:20px;
+
+  border-radius:15px;
+
+  border:1px solid #1e293b;
+
+}
+
+
+
+.detail-box label{
+
+  display:block;
+
+  color:#94a3b8;
+
+  margin-bottom:8px;
+
+}
+
+
+
+.detail-box strong{
+
+  color:#ffffff;
+
+}
+
+
+
+.footer{
+
+  margin-top:40px;
+
+  text-align:center;
+
+  color:#64748b;
+
+}
+
+
+
+.actions{
+
+  text-align:center;
+
+  margin-top:30px;
+
+}
+
+
+
+.actions button{
+
+  background:#2563eb;
+
+  color:white;
+
+  border:none;
+
+  padding:15px 35px;
+
+  border-radius:12px;
+
+  cursor:pointer;
+
+}
+@media print {
+
+
+  body *{
+
+      visibility:hidden;
+
+  }
+
+
+
+  .receipt-page,
+  .receipt-page *{
+
+      visibility:visible;
+
+  }
+
+
+
+  .receipt-page{
+
+      position:absolute;
+
+      left:0;
+
+      top:0;
+
+      width:100%;
+
+      background:white;
+
+      color:black;
+
+  }
+
+
+
+  .receipt-card{
+
+      background:white;
+
+      color:black;
+
+      box-shadow:none;
+
+      border:1px solid #ddd;
+
+  }
+
+
+
+  .actions{
+
+      display:none;
+
+  }
+
+
+
+  .paid{
+
+      color:green;
+
+      background:#dcfce7;
+
+  }
+
+
+}
+@media print {
+
+  .print-area{
+  
+   width:100vw !important;
+  
+   max-width:none !important;
+  
+   margin:0 !important;
+  
+   padding:20px !important;
+  
+   transform:none !important;
+  
+  }
+  
+  }

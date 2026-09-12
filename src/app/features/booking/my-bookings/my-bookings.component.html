@@ -1,0 +1,76 @@
+<section class="page">
+  <div class="container">
+    <header class="page-head">
+      <div>
+        <span class="page-kicker">MY BOOKINGS</span>
+        <h1>Your event plans</h1>
+        <p class="muted">Track pending, confirmed, expired and cancelled bookings in one place.</p>
+      </div>
+      <button class="btn btn-primary" type="button" routerLink="/events">Browse events</button>
+    </header>
+    @if (loading()) {
+      <app-loading />
+    } @else if (error()) {
+      <app-error [message]="error()" (retry)="load()" />
+    } @else if (bookings().length === 0) {
+      <app-empty
+        icon="B"
+        title="No bookings yet"
+        text="Choose an event and reserve your first seats."
+      />
+    } @else {
+      <div class="booking-list">
+        @for (b of bookings(); track b.bookingId) {
+          <article class="booking card">
+            <div class="accent"></div>
+            <div class="main">
+              <div class="top">
+                <div>
+                  <span class="code">{{ b.bookingNumber }}</span>
+                  <h2>{{ b.eventName }}</h2>
+                </div>
+                <app-status-badge [label]="b.status" />
+              </div>
+              <div class="details">
+                <span><small>Booked</small>{{ b.bookingDate | date: 'medium' }}</span
+                ><span><small>Seats</small>{{ b.seats.length ? b.seats.join(', ') : '—' }}</span
+                ><span><small>Parking</small>{{ b.parkingSlot || 'No parking' }}</span
+                ><span
+                  ><small>Total</small
+                  >{{ b.totalAmount | currency: 'LKR' : 'symbol' : '1.0-0' }}</span
+                >
+              </div>
+              <div class="actions">
+                <button class="btn btn-outline btn-sm" type="button" (click)="view(b)">
+                  View details
+                </button>
+                @if (b.status === 'Pending' && b.paymentStatus !== 'Paid') {
+                  <button class="btn btn-primary btn-sm" type="button" (click)="pay(b)">
+                    Complete payment
+                  </button>
+                }
+                @if (b.status !== 'Cancelled' && b.status !== 'Expired') {
+                  <button class="btn btn-danger btn-sm" type="button" (click)="cancelTarget.set(b)">
+                    Cancel
+                  </button>
+                }
+              </div>
+            </div>
+          </article>
+        }
+      </div>
+    }
+    <app-confirm-dialog
+      [open]="!!cancelTarget()"
+      title="Cancel booking?"
+      [message]="
+        'Cancel ' +
+        (cancelTarget()?.bookingNumber ?? 'this booking') +
+        ' and release its seats and parking?'
+      "
+      confirmText="Cancel booking"
+      (confirm)="cancel()"
+      (cancel)="cancelTarget.set(null)"
+    />
+  </div>
+</section>

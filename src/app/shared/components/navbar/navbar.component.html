@@ -1,0 +1,531 @@
+<header class="nav-shell">
+
+  <div class="nav-inner">
+
+    <!-- =========================
+         LOGO
+    ========================== -->
+
+    <a
+      class="brand"
+      [routerLink]="
+        isAdmin()
+          ? '/admin/dashboard'
+          : '/events'
+      "
+    >
+
+      <span class="brand-mark">
+        P
+      </span>
+
+      <span class="brand-copy">
+
+        <strong>
+          ParkFlow
+        </strong>
+
+        <small>
+          Event & Parking
+        </small>
+
+      </span>
+
+    </a>
+
+
+    <!-- =========================
+         DESKTOP NAVIGATION
+    ========================== -->
+
+    <nav class="desktop-links">
+
+      @if (isAdmin()) {
+
+        <a
+          routerLink="/admin/dashboard"
+          routerLinkActive="active"
+        >
+          Dashboard
+        </a>
+
+        <a
+          routerLink="/admin/events"
+          routerLinkActive="active"
+        >
+          Events
+        </a>
+
+        <a
+          routerLink="/admin/inventory"
+          routerLinkActive="active"
+        >
+          Seats & Parking
+        </a>
+
+        <a
+          routerLink="/admin/venues"
+          routerLinkActive="active"
+        >
+          Venues
+        </a>
+
+        <a
+          routerLink="/admin/categories"
+          routerLinkActive="active"
+        >
+          Categories
+        </a>
+
+        <a
+          routerLink="/admin/bookings"
+          routerLinkActive="active"
+        >
+          Bookings
+        </a>
+
+        <a
+          routerLink="/admin/customers"
+          routerLinkActive="active"
+        >
+          Customers
+        </a>
+
+      } @else {
+
+        <a
+          routerLink="/dashboard"
+          routerLinkActive="active"
+        >
+          Dashboard
+        </a>
+
+        <a
+          routerLink="/events"
+          routerLinkActive="active"
+        >
+          Events
+        </a>
+
+        <a
+          routerLink="/bookings"
+          routerLinkActive="active"
+        >
+          My Bookings
+        </a>
+
+        <a
+          routerLink="/payments"
+          routerLinkActive="active"
+        >
+          Payments
+        </a>
+
+        <a
+          routerLink="/notifications"
+          routerLinkActive="active"
+          class="badge-link"
+        >
+
+          Notifications
+
+          @if (unread() > 0) {
+
+            <b>
+              {{ unread() }}
+            </b>
+
+          }
+
+        </a>
+
+      }
+
+    </nav>
+
+
+    <!-- =========================
+         RIGHT SIDE
+    ========================== -->
+
+    <div class="nav-actions">
+
+      @if (
+        !isAdmin()
+        &&
+        booking.seatCount() > 0
+      ) {
+
+        <a
+          class="booking-chip"
+          routerLink="/checkout"
+        >
+
+          <strong>
+            {{ booking.seatCount() }}
+          </strong>
+
+          <span>
+
+            {{
+              booking.total()
+                | number: '1.0-0'
+            }}
+
+            LKR
+
+          </span>
+
+        </a>
+
+      }
+
+
+      <!-- USER -->
+
+      <a
+        class="profile-chip"
+        [routerLink]="
+          isAdmin()
+            ? '/admin/dashboard'
+            : '/profile'
+        "
+      >
+
+        <span class="avatar">
+
+          {{
+            auth.user()
+              ?.fullName
+              ?.charAt(0)
+              ?.toUpperCase()
+          }}
+
+        </span>
+
+
+        <span class="profile-copy">
+
+          <strong>
+            {{ auth.user()?.fullName }}
+          </strong>
+
+          <small>
+            {{ auth.role() }}
+          </small>
+
+        </span>
+
+      </a>
+
+
+      <!-- DESKTOP LOGOUT -->
+
+      <button
+        class="desktop-logout"
+        type="button"
+        (click)="logout()"
+        title="Logout"
+      >
+
+        <span class="logout-icon">
+          ↪
+        </span>
+
+        <span>
+          Logout
+        </span>
+
+      </button>
+
+
+      <!-- MOBILE MENU -->
+
+      <button
+        class="menu-btn"
+        type="button"
+        (click)="toggleMenu()"
+        aria-label="Open menu"
+      >
+
+        <span></span>
+        <span></span>
+        <span></span>
+
+      </button>
+
+    </div>
+
+  </div>
+
+</header>
+
+
+<!-- =========================
+     MOBILE BACKDROP
+========================== -->
+
+<button
+  class="drawer-backdrop"
+  type="button"
+  [class.visible]="menuOpen()"
+  (click)="closeMenu()"
+  aria-label="Close menu"
+>
+</button>
+
+
+<!-- =========================
+     MOBILE DRAWER
+========================== -->
+
+<aside
+  class="mobile-drawer"
+  [class.open]="menuOpen()"
+>
+
+  <div class="drawer-head">
+
+    <div class="drawer-brand">
+
+      <span class="brand-mark">
+        P
+      </span>
+
+      <span>
+
+        <strong>
+          ParkFlow
+        </strong>
+
+        <small>
+
+          {{
+            isAdmin()
+              ? 'Administrator'
+              : 'Customer'
+          }}
+
+        </small>
+
+      </span>
+
+    </div>
+
+
+    <button
+      type="button"
+      class="drawer-close"
+      (click)="closeMenu()"
+    >
+      ×
+    </button>
+
+  </div>
+
+
+  <!-- USER INFO -->
+
+  <div class="drawer-user">
+
+    <span class="avatar large">
+
+      {{
+        auth.user()
+          ?.fullName
+          ?.charAt(0)
+          ?.toUpperCase()
+      }}
+
+    </span>
+
+
+    <span>
+
+      <strong>
+        {{ auth.user()?.fullName }}
+      </strong>
+
+      <small>
+        {{ auth.user()?.email }}
+      </small>
+
+    </span>
+
+  </div>
+
+
+  <!-- MOBILE LINKS -->
+
+  <nav class="drawer-links">
+
+    @if (isAdmin()) {
+
+      <a
+        routerLink="/admin/dashboard"
+        routerLinkActive="active"
+      >
+        Dashboard
+      </a>
+
+      <a
+        routerLink="/admin/events"
+        routerLinkActive="active"
+      >
+        Manage Events
+      </a>
+
+      <a
+        routerLink="/admin/inventory"
+        routerLinkActive="active"
+      >
+        Seat & Parking Builder
+      </a>
+
+      <a
+        routerLink="/admin/venues"
+        routerLinkActive="active"
+      >
+        Venues
+      </a>
+
+      <a
+        routerLink="/admin/categories"
+        routerLinkActive="active"
+      >
+        Categories
+      </a>
+
+      <a
+        routerLink="/admin/bookings"
+        routerLinkActive="active"
+      >
+        Bookings
+      </a>
+
+      <a
+        routerLink="/admin/customers"
+        routerLinkActive="active"
+      >
+        Customers
+      </a>
+
+    } @else {
+
+      <a
+        routerLink="/dashboard"
+        routerLinkActive="active"
+      >
+        Dashboard
+      </a>
+
+      <a
+        routerLink="/events"
+        routerLinkActive="active"
+      >
+        Browse Events
+      </a>
+
+      <a
+        routerLink="/bookings"
+        routerLinkActive="active"
+      >
+        My Bookings
+      </a>
+
+      <a
+        routerLink="/payments"
+        routerLinkActive="active"
+      >
+        Payments
+      </a>
+
+      <a
+        routerLink="/notifications"
+        routerLinkActive="active"
+      >
+
+        Notifications
+
+        @if (unread() > 0) {
+
+          <b>
+            {{ unread() }}
+          </b>
+
+        }
+
+      </a>
+
+      <a
+        routerLink="/profile"
+        routerLinkActive="active"
+      >
+        Profile
+      </a>
+
+    }
+
+  </nav>
+
+
+  <!-- DRAWER FOOTER -->
+
+  <div class="drawer-footer">
+
+    @if (
+      !isAdmin()
+      &&
+      booking.seatCount() > 0
+    ) {
+
+      <a
+        class="drawer-booking"
+        routerLink="/checkout"
+      >
+
+        <span>
+
+          {{ booking.seatCount() }}
+
+          selected seat{{
+            booking.seatCount() === 1
+              ? ''
+              : 's'
+          }}
+
+        </span>
+
+        <strong>
+
+          {{
+            booking.total()
+              | number: '1.0-0'
+          }}
+
+          LKR
+
+        </strong>
+
+      </a>
+
+    }
+
+
+    <button
+      type="button"
+      class="logout"
+      (click)="logout()"
+    >
+
+      <span>
+        ↪
+      </span>
+
+      Logout
+
+    </button>
+
+  </div>
+
+</aside>

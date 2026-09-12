@@ -1,0 +1,241 @@
+<section class="page events-page">
+
+  <div class="container">
+
+    <header class="events-hero">
+
+      <div>
+
+        <span class="page-kicker">
+          DISCOVER EVENTS
+        </span>
+
+        <h1>
+          Find your next experience
+        </h1>
+
+        <p>
+          Browse upcoming events,
+          compare venues and continue
+          directly to live seat selection.
+        </p>
+
+      </div>
+
+
+      <div class="event-count">
+
+        <strong>
+          {{ events().length }}
+        </strong>
+
+        <span>
+          events available
+        </span>
+
+      </div>
+
+    </header>
+
+
+    <section class="filter-card">
+
+      <div class="search-box">
+
+        <span class="search-icon">
+          ⌕
+        </span>
+
+
+        <div class="field">
+
+          <label>
+            Search
+          </label>
+
+          <input
+            class="input search-input"
+            [(ngModel)]="search"
+            (keyup.enter)="applyFilters()"
+            placeholder="Search events..."
+          />
+
+        </div>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Venue
+        </label>
+
+        <select
+          class="select"
+          [(ngModel)]="venue"
+        >
+
+          <option [ngValue]="null">
+            All venues
+          </option>
+
+          @for (
+            v of venues();
+            track v.venueId
+          ) {
+
+            <option
+              [ngValue]="v.venueId"
+            >
+              {{ v.venueName }}
+            </option>
+
+          }
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Category
+        </label>
+
+        <select
+          class="select"
+          [(ngModel)]="category"
+        >
+
+          <option [ngValue]="null">
+            All categories
+          </option>
+
+          @for (
+            c of categories();
+            track c.categoryId
+          ) {
+
+            <option
+              [ngValue]="c.categoryId"
+            >
+              {{ c.categoryName }}
+            </option>
+
+          }
+
+        </select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>
+          Date
+        </label>
+
+        <input
+          class="input"
+          type="date"
+          [(ngModel)]="date"
+        />
+
+      </div>
+
+
+      <div class="filter-actions">
+
+        <button
+          class="btn btn-primary"
+          type="button"
+          (click)="applyFilters()"
+        >
+          Search
+        </button>
+
+        <button
+          class="btn btn-outline"
+          type="button"
+          (click)="clearFilters()"
+        >
+          Clear
+        </button>
+
+      </div>
+
+    </section>
+
+
+    @if (loading()) {
+
+      <app-loading
+        text="Loading events…"
+      />
+
+    } @else if (error()) {
+
+      <app-error
+        [message]="error()"
+        (retry)="loadReference()"
+      />
+
+    } @else if (
+      events().length === 0
+    ) {
+
+      <app-empty
+        icon="◇"
+        title="No matching events"
+        text="Try changing the search, date, venue or category filters."
+      />
+
+    } @else {
+
+      <div class="section-bar">
+
+        <div>
+
+          <span class="page-kicker">
+            UPCOMING
+          </span>
+
+          <h2>
+            Events you can book now
+          </h2>
+
+        </div>
+
+        <span class="result-count">
+
+          {{ events().length }}
+          results
+
+        </span>
+
+      </div>
+
+
+      <div class="events-grid">
+
+        @for (
+          event of events();
+          track event.eventId
+        ) {
+
+          <app-event-card
+            [event]="event"
+            (open)="open($event)"
+          />
+
+        }
+
+      </div>
+
+    }
+
+  </div>
+
+</section>

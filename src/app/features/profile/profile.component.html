@@ -1,0 +1,52 @@
+<section class="page">
+  <div class="container profile-container">
+    <header class="page-head">
+      <div>
+        <span class="page-kicker">PROFILE</span>
+        <h1>Your account</h1>
+        <p class="muted">Keep your contact information current.</p>
+      </div>
+    </header>
+    @if (loading()) {
+      <app-loading />
+    } @else if (error() && !customer()) {
+      <app-error [message]="error()" (retry)="load()" />
+    } @else {
+      @if (customer(); as c) {
+      <div class="profile-grid">
+        <aside class="identity card panel">
+          <div class="avatar">{{ c.name.charAt(0).toUpperCase() }}</div>
+          <h2>{{ c.name }}</h2>
+          <p>{{ c.email }}</p>
+          <span>{{ c.role }}</span
+          ><small>Status · {{ c.status }}</small>
+        </aside>
+        <form class="card panel" [formGroup]="form" (ngSubmit)="save()">
+          <h2>Contact details</h2>
+          <p class="muted">Email and role are managed by the account system.</p>
+          @if (error()) {
+            <div class="msg error">{{ error() }}</div>
+          }
+          @if (success()) {
+            <div class="msg success">{{ success() }}</div>
+          }
+          <div class="form-grid">
+            <div class="field">
+              <label>Full name</label><input class="input" formControlName="name" />
+            </div>
+            <div class="field">
+              <label>Email</label><input class="input" [value]="c.email" disabled />
+            </div>
+            <div class="field">
+              <label>Phone number</label><input class="input" formControlName="phoneNumber" />
+            </div>
+            <button class="btn btn-primary" type="submit" [disabled]="busy() || form.invalid">
+              {{ busy() ? 'Saving…' : 'Save changes' }}
+            </button>
+          </div>
+        </form>
+      </div>
+      }
+    }
+  </div>
+</section>

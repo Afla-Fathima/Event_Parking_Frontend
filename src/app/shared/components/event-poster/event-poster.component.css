@@ -1,0 +1,183 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.event-poster {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 210px;
+  overflow: hidden;
+  isolation: isolate;
+  color: #fff;
+  background:
+    radial-gradient(circle at 72% 18%, rgba(57,130,246,.26), transparent 24%),
+    radial-gradient(circle at 18% 84%, rgba(30,64,175,.28), transparent 30%),
+    linear-gradient(145deg, #06101f 0%, #0b1f3c 46%, #02050b 100%);
+}
+
+.event-poster::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -3;
+  opacity: .55;
+  background:
+    linear-gradient(120deg, transparent 0 44%, rgba(96,165,250,.08) 44% 45%, transparent 45%),
+    linear-gradient(60deg, transparent 0 60%, rgba(255,255,255,.035) 60% 61%, transparent 61%);
+  background-size: 140px 140px, 190px 190px;
+}
+
+.backdrop-shape {
+  position: absolute;
+  border: 1px solid rgba(96,165,250,.14);
+  border-radius: 50%;
+}
+
+.shape-one {
+  width: 300px;
+  height: 300px;
+  top: -130px;
+  right: -70px;
+  box-shadow: inset 0 0 70px rgba(59,130,246,.05);
+}
+
+.shape-two {
+  width: 220px;
+  height: 220px;
+  left: -80px;
+  bottom: -100px;
+}
+
+.light-beam {
+  position: absolute;
+  width: 160px;
+  height: 380px;
+  background: linear-gradient(180deg, rgba(96,165,250,.17), transparent 72%);
+  filter: blur(18px);
+  transform-origin: top center;
+  opacity: .8;
+}
+
+.beam-one { top: -80px; left: 20%; transform: rotate(24deg); }
+.beam-two { top: -90px; right: 18%; transform: rotate(-20deg); }
+.beam-three { top: -120px; left: 52%; opacity: .35; }
+
+.crowd {
+  position: absolute;
+  inset: auto 0 0;
+  height: 36%;
+  opacity: .22;
+  background:
+    radial-gradient(circle at 8% 100%, #000 0 13px, transparent 14px),
+    radial-gradient(circle at 18% 100%, #000 0 18px, transparent 19px),
+    radial-gradient(circle at 32% 100%, #000 0 12px, transparent 13px),
+    radial-gradient(circle at 46% 100%, #000 0 16px, transparent 17px),
+    radial-gradient(circle at 63% 100%, #000 0 13px, transparent 14px),
+    radial-gradient(circle at 78% 100%, #000 0 19px, transparent 20px),
+    radial-gradient(circle at 92% 100%, #000 0 14px, transparent 15px);
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.02), rgba(0,0,0,.18) 60%, rgba(0,0,0,.62)),
+    radial-gradient(circle at center, transparent 35%, rgba(0,0,0,.35) 100%);
+}
+
+.poster-top,.poster-copy,.poster-bottom {
+  position: absolute;
+  z-index: 2;
+  left: 18px;
+  right: 18px;
+}
+
+.poster-top {
+  top: 17px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.poster-top .category,
+.poster-top .year {
+  padding: 6px 8px;
+  border: 1px solid rgba(96,165,250,.20);
+  border-radius: 999px;
+  color: #b9d5ff;
+  background: rgba(3,8,17,.48);
+  backdrop-filter: blur(10px);
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: .09em;
+}
+
+.poster-copy {
+  bottom: 52px;
+  max-width: 82%;
+}
+
+.poster-copy .venue {
+  color: #6fa8ff;
+  font-size: 7px;
+  font-weight: 900;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+
+.poster-copy h2 {
+  margin: 6px 0 5px;
+  color: #fff;
+  font-size: clamp(21px,3vw,34px);
+  line-height: 1;
+  letter-spacing: -.04em;
+  text-shadow: 0 8px 20px rgba(0,0,0,.45);
+}
+
+.poster-copy p {
+  max-width: 400px;
+  margin: 0;
+  overflow: hidden;
+  color: #a8bad4;
+  font-size: 8px;
+  line-height: 1.45;
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.poster-bottom {
+  bottom: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.date-box,.time-box {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  color: #eaf2ff;
+}
+
+.date-box strong { color: #69a2ff; font-size: 18px; }
+.date-box span,.time-box small { color: #70819c; font-size: 7px; font-weight: 900; }
+.time-box { display: grid; gap: 2px; text-align: right; }
+.time-box strong { font-size: 9px; }
+
+/* keep theme classes blue instead of green */
+.event-poster.theme-sports,
+.event-poster.theme-conference,
+.event-poster.theme-workshop,
+.event-poster.theme-seminar,
+.event-poster.theme-webinar,
+.event-poster.theme-concert {
+  background:
+    radial-gradient(circle at 72% 18%, rgba(57,130,246,.24), transparent 24%),
+    radial-gradient(circle at 18% 84%, rgba(30,64,175,.24), transparent 30%),
+    linear-gradient(145deg, #06101f 0%, #0b1f3c 46%, #02050b 100%);
+}

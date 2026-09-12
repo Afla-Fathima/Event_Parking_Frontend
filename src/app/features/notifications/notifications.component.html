@@ -1,0 +1,48 @@
+<section class="page">
+  <div class="container">
+    <header class="page-head">
+      <div>
+        <span class="page-kicker">NOTIFICATIONS</span>
+        <h1>Your latest updates</h1>
+        <p class="muted">Booking, payment, cancellation and event messages from the system.</p>
+      </div>
+    </header>
+
+    @if (loading()) {
+      <app-loading />
+    } @else if (error()) {
+      <app-error [message]="error()" (retry)="load()" />
+    } @else if (items().length === 0) {
+      <app-empty
+        icon="N"
+        title="You're all caught up"
+        text="System-generated notifications will appear here."
+      />
+    } @else {
+      <div class="notice-list">
+        @for (n of items(); track n.notificationId) {
+          <button
+            type="button"
+            class="notice card"
+            [ngClass]="{ unread: !n.isRead }"
+            (click)="read(n)"
+          >
+            <div class="type" [attr.title]="n.type | titlecase">
+              {{ n.type | titlecase | slice: 0 : 1 }}
+            </div>
+            <div>
+              <div class="notice-head">
+                <strong>{{ n.title }}</strong>
+                <span>{{ n.createdAt | date: 'medium' }}</span>
+              </div>
+              <p>{{ n.message | shortText: 140 }}</p>
+            </div>
+            @if (!n.isRead) {
+              <b class="new">NEW</b>
+            }
+          </button>
+        }
+      </div>
+    }
+  </div>
+</section>

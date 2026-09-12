@@ -1,0 +1,112 @@
+<section class="page">
+  <div class="container">
+    <header class="page-head">
+      <div>
+        <span class="page-kicker">ADMIN · VENUES</span>
+        <h1>Venue management</h1>
+        <p class="muted">Maintain the physical locations used by events.</p>
+      </div>
+    </header>
+    <div class="admin-split">
+      <form class="card panel form-card" #form="ngForm" (ngSubmit)="save(form)">
+        <h2>{{ editing() ? 'Edit venue' : 'Add venue' }}</h2>
+        <div class="form-grid">
+          <div class="field">
+            <label>Name</label
+            ><input class="input" name="venueName" [(ngModel)]="model.venueName" required />
+          </div>
+          <div class="field">
+            <label>Location</label
+            ><input class="input" name="location" [(ngModel)]="model.location" required />
+          </div>
+          <div class="field">
+            <label>Capacity</label
+            ><input
+              class="input"
+              type="number"
+              name="capacity"
+              [(ngModel)]="model.capacity"
+              min="1"
+              required
+            />
+          </div>
+          <div class="field">
+            <label>Description</label
+            ><textarea
+              class="textarea"
+              name="description"
+              [(ngModel)]="model.description"
+            ></textarea>
+          </div>
+          <div class="toolbar">
+            <button class="btn btn-primary" type="submit" [disabled]="form.invalid || busy()">
+              {{ busy() ? 'Saving…' : 'Save venue' }}
+            </button>
+            @if (editing()) {
+              <button class="btn btn-outline" type="button" (click)="reset(form)">Cancel</button>
+            }
+          </div>
+        </div>
+      </form>
+      <section>
+        @if (loading()) {
+          <app-loading />
+        } @else if (error() && !items().length) {
+          <app-error [message]="error()" (retry)="load()" />
+        } @else if (items().length === 0) {
+          <app-empty title="No venues" text="Create the first venue using the form." />
+        } @else {
+          <div class="table-wrap card">
+            <table>
+              <thead>
+                <tr>
+                  <th>Venue</th>
+                  <th>Location</th>
+                  <th>Capacity</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for (v of items(); track v.venueId) {
+                  <tr>
+                    <td>
+                      <strong>{{ v.venueName }}</strong
+                      ><small>{{ v.description }}</small>
+                    </td>
+                    <td>{{ v.location }}</td>
+                    <td>{{ v.capacity }}</td>
+                    <td>
+                      <div class="row-actions">
+                        <button class="btn btn-outline btn-sm" type="button" (click)="edit(v)">
+                          Edit</button
+                        ><button
+                          class="btn btn-danger btn-sm"
+                          type="button"
+                          (click)="deleteTarget.set(v)"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+        }
+      </section>
+    </div>
+    <app-confirm-dialog
+      [open]="!!deleteTarget()"
+      title="Delete venue?"
+      [message]="
+        'Delete ' +
+        (deleteTarget()?.venueName ?? 'this venue') +
+        '? The API may refuse if upcoming events use it.'
+      "
+      confirmText="Delete"
+      (confirm)="remove()"
+      (cancel)="deleteTarget.set(null)"
+    />
+  </div>
+</section>

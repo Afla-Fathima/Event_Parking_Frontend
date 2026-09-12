@@ -1,0 +1,146 @@
+@if (currentEvent(); as event) {
+
+  <div
+    class="event-poster"
+    [ngClass]="themeClass()"
+  >
+
+    <div
+      class="
+        backdrop-shape
+        shape-one
+      "
+    ></div>
+
+    <div
+      class="
+        backdrop-shape
+        shape-two
+      "
+    ></div>
+
+
+    <div
+      class="
+        light-beam
+        beam-one
+      "
+    ></div>
+
+    <div
+      class="
+        light-beam
+        beam-two
+      "
+    ></div>
+
+    <div
+      class="
+        light-beam
+        beam-three
+      "
+    ></div>
+
+
+    <div class="crowd"></div>
+
+    <div class="vignette"></div>
+
+
+    <div class="poster-top">
+
+      <span class="category">
+
+        {{
+          categoryLabel()
+            | uppercase
+        }}
+
+      </span>
+
+
+      <span class="year">
+
+        {{
+          event.eventDate
+            | date: 'yyyy'
+        }}
+
+      </span>
+
+    </div>
+
+
+    <div class="poster-copy">
+
+      <span class="venue">
+
+        {{ event.venueName }}
+
+      </span>
+
+
+      <h2>
+
+        {{ event.eventName }}
+
+      </h2>
+
+
+      <p>
+
+        {{
+          event.description
+          ||
+          'Reserve your seats and enjoy a memorable event experience.'
+        }}
+
+      </p>
+
+    </div>
+
+
+    <div class="poster-bottom">
+
+      <div class="date-box">
+
+        <strong>
+
+          {{
+            event.eventDate
+              | date: 'dd'
+          }}
+
+        </strong>
+
+
+        <span>
+
+          {{
+            event.eventDate
+              | date: 'MMM'
+              | uppercase
+          }}
+
+        </span>
+
+      </div>
+
+
+      <div class="time-box">
+
+        <small>
+          STARTS
+        </small>
+
+        <strong>
+          {{ event.startTime }}
+        </strong>
+
+      </div>
+
+    </div>
+
+  </div>
+
+}

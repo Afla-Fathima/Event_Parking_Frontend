@@ -1,0 +1,52 @@
+<div class="seat-admin-scroll">
+
+  <div class="seat-admin-grid">
+
+    @for (
+      seat of sortedSeats();
+      track seat.seatId
+    ) {
+
+      <div
+        class="seat-tile"
+
+        [class.available]="
+          seat.status.toLowerCase()
+            === 'available'
+        "
+
+        [class.booked]="
+          seat.status.toLowerCase()
+            !== 'available'
+        "
+
+        [attr.aria-label]="
+          'Seat ' +
+          seat.seatNumber +
+          ', ' +
+          seat.status
+        "
+      >
+
+        <span class="seat-number">
+          {{ seat.seatNumber }}
+        </span>
+
+        @if (
+          seat.status.toLowerCase()
+            !== 'available'
+        ) {
+
+          <span class="seat-lock">
+            ×
+          </span>
+
+        }
+
+      </div>
+
+    }
+
+  </div>
+
+</div>

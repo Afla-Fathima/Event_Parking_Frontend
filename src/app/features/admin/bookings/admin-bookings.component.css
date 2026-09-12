@@ -1,0 +1,128 @@
+.admin-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 28px 30px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #0e172a, #1b2b4c);
+  color: #fff;
+  margin-bottom: 22px;
+}
+.admin-hero h1 {
+  color: #fff;
+  margin: 7px 0;
+}
+.admin-hero p {
+  color: #aebbd0;
+  margin: 0;
+}
+.hero-actions {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+}
+.admin-hero .btn-outline {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+.stats {
+  margin-bottom: 20px;
+}
+.occupancy {
+  margin-bottom: 20px;
+}
+.occupancy-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+.occupancy-head h2 {
+  margin: 6px 0;
+}
+.occupancy-list {
+  display: grid;
+  gap: 12px;
+}
+.occupancy-row {
+  display: grid;
+  grid-template-columns: minmax(180px, 1.1fr) minmax(220px, 1fr) minmax(220px, 1fr);
+  gap: 18px;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #e8ebf2;
+  border-radius: 14px;
+  background: #fff;
+}
+.occupancy-title,
+.metric {
+  display: grid;
+  gap: 7px;
+}
+.occupancy-title small,
+.metric small {
+  color: var(--muted);
+}
+.metric-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+}
+.bar {
+  height: 9px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #eef0f6;
+}
+.bar span {
+  display: block;
+  height: 100%;
+  min-width: 2px;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #625df5, #8b86ff);
+}
+.bar.parking span {
+  background: linear-gradient(90deg, #0ea5e9, #38bdf8);
+}
+.ops a {
+  padding: 16px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 10px;
+  align-items: center;
+  transition: 0.2s;
+}
+.ops a:hover {
+  transform: translateY(-2px);
+  border-color: #d6d3ff;
+}
+.ops b {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+.ops span {
+  display: grid;
+}
+.ops small {
+  color: var(--muted);
+  font-size: 9px;
+}
+@media (max-width: 900px) {
+  .occupancy-row {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 700px) {
+  .admin-hero {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}

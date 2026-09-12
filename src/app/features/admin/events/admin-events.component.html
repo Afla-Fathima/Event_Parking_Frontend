@@ -1,0 +1,569 @@
+<section class="page">
+
+  <div class="container">
+
+    <header class="page-head">
+
+      <div>
+
+        <span class="page-kicker">
+          ADMIN · EVENTS
+        </span>
+
+        <h1>
+          Event catalogue
+        </h1>
+
+        <p class="muted">
+          Create and maintain bookable
+          events with venue, category,
+          pricing and capacity.
+        </p>
+
+      </div>
+
+    </header>
+
+
+    @if (error()) {
+
+      <div class="notice">
+        {{ error() }}
+      </div>
+
+    }
+
+
+    <div class="event-admin-grid">
+
+
+      <form
+        class="card panel form-card"
+        [formGroup]="form"
+        (ngSubmit)="save()"
+      >
+
+        <div class="form-title">
+
+          <div>
+
+            <span class="page-kicker">
+
+              {{
+                editing()
+                  ? 'EDIT EVENT'
+                  : 'NEW EVENT'
+              }}
+
+            </span>
+
+
+            <h2>
+
+              {{
+                editing()?.eventName ||
+                'Create event'
+              }}
+
+            </h2>
+
+          </div>
+
+
+          @if (editing()) {
+
+            <button
+              type="button"
+              class="btn btn-outline btn-sm"
+              (click)="reset()"
+            >
+              Cancel
+            </button>
+
+          }
+
+        </div>
+
+
+
+        <div class="form-grid">
+
+
+          <div class="field">
+
+            <label>
+              Event name
+            </label>
+
+            <input
+              class="input"
+              formControlName="eventName"
+            />
+
+          </div>
+
+
+
+          <div class="grid grid-2">
+
+
+            <div class="field">
+
+              <label>
+                Date
+              </label>
+
+              <input
+                class="input"
+                type="date"
+                formControlName="eventDate"
+              />
+
+
+              @if (
+                form.controls.eventDate.touched &&
+                form.controls.eventDate.invalid
+              ) {
+
+                <span class="field-error">
+                  Choose today or a future date.
+                </span>
+
+              }
+
+            </div>
+
+
+
+            <div class="field">
+
+              <label>
+                Capacity
+                <small>
+                  (max 200)
+                </small>
+              </label>
+
+              <input
+                class="input"
+                type="number"
+                min="1"
+                max="200"
+                formControlName="capacity"
+              />
+
+
+              @if (
+                form.controls.capacity.touched &&
+                form.controls.capacity.invalid
+              ) {
+
+                <span class="field-error">
+                  Capacity must be between
+                  1 and 200 seats.
+                </span>
+
+              }
+
+            </div>
+
+          </div>
+
+
+
+          <div class="grid grid-2">
+
+            <div class="field">
+
+              <label>
+                Start time
+              </label>
+
+              <input
+                class="input"
+                type="time"
+                formControlName="startTime"
+              />
+
+            </div>
+
+
+            <div class="field">
+
+              <label>
+                End time
+              </label>
+
+              <input
+                class="input"
+                type="time"
+                formControlName="endTime"
+              />
+
+            </div>
+
+          </div>
+
+
+
+          <div class="grid grid-2">
+
+
+            <div class="field">
+
+              <label>
+                Venue
+              </label>
+
+              <select
+                class="select"
+                formControlName="venueId"
+              >
+
+                <option [ngValue]="0">
+                  Select venue
+                </option>
+
+
+                @for (
+                  venue of venues();
+                  track venue.venueId
+                ) {
+
+                  <option
+                    [ngValue]="venue.venueId"
+                  >
+                    {{ venue.venueName }}
+                  </option>
+
+                }
+
+              </select>
+
+            </div>
+
+
+
+            <div class="field">
+
+              <label>
+                Category
+              </label>
+
+              <select
+                class="select"
+                formControlName="categoryId"
+              >
+
+                <option [ngValue]="0">
+                  Select category
+                </option>
+
+
+                @for (
+                  category of categories();
+                  track category.categoryId
+                ) {
+
+                  <option
+                    [ngValue]="category.categoryId"
+                  >
+                    {{ category.categoryName }}
+                  </option>
+
+                }
+
+              </select>
+
+            </div>
+
+          </div>
+
+
+
+          <div class="grid grid-2">
+
+
+            <div class="field">
+
+              <label>
+                Ticket price (LKR)
+              </label>
+
+              <input
+                class="input"
+                type="number"
+                formControlName="ticketPrice"
+              />
+
+
+              @if (ticketPriceHint()) {
+
+                <span
+                  class="field-hint"
+                  [class.locked]="
+                    ticketPriceLocked()
+                  "
+                >
+
+                  {{ ticketPriceHint() }}
+
+                </span>
+
+              }
+
+            </div>
+
+
+
+            <div class="field">
+
+              <label>
+                Parking fee (LKR)
+              </label>
+
+              <input
+                class="input"
+                type="number"
+                formControlName="parkingFee"
+              />
+
+            </div>
+
+          </div>
+
+
+
+          <div class="field">
+
+            <label>
+              Description
+            </label>
+
+            <textarea
+              class="textarea"
+              formControlName="description"
+            ></textarea>
+
+          </div>
+
+
+
+          <button
+            class="btn btn-primary"
+            type="submit"
+
+            [disabled]="
+              form.invalid ||
+              busy() ||
+              checkingBookings()
+            "
+          >
+
+            {{
+
+              busy()
+
+                ? 'Saving…'
+
+                : checkingBookings()
+
+                  ? 'Checking bookings…'
+
+                  : editing()
+
+                    ? 'Update event'
+
+                    : 'Create event'
+
+            }}
+
+          </button>
+
+
+        </div>
+
+      </form>
+
+
+
+      <section>
+
+
+        @if (loading()) {
+
+          <app-loading />
+
+        }
+
+        @else if (
+          events().length === 0
+        ) {
+
+          <app-empty
+            icon="E"
+            title="No events"
+            text="Create the first event using the form."
+          />
+
+        }
+
+        @else {
+
+          <div class="event-list">
+
+
+            @for (
+              event of events();
+              track event.eventId
+            ) {
+
+              <article
+                class="event-row card"
+              >
+
+
+                <div class="date">
+
+                  <strong>
+                    {{
+                      event.eventDate |
+                      date: 'dd'
+                    }}
+                  </strong>
+
+                  <span>
+                    {{
+                      event.eventDate |
+                      date: 'MMM'
+                    }}
+                  </span>
+
+                </div>
+
+
+
+                <div class="info">
+
+                  <span>
+
+                    {{ event.categoryName }}
+
+                    ·
+
+                    {{ event.venueName }}
+
+                  </span>
+
+
+                  <h3>
+                    {{ event.eventName }}
+                  </h3>
+
+
+                  <p>
+
+                    {{
+                      event.eventDate |
+                      date: 'mediumDate'
+                    }}
+
+                    ·
+
+                    {{ event.startTime }}
+
+                    ·
+
+                    {{ event.capacity }}
+                    seats
+
+                  </p>
+
+                </div>
+
+
+
+                <div class="price">
+
+                  {{
+                    event.ticketPrice |
+                    currency:
+                      'LKR':
+                      'symbol':
+                      '1.0-0'
+                  }}
+
+                </div>
+
+
+
+                <div class="row-actions">
+
+
+                  <button
+                    class="btn btn-outline btn-sm"
+                    type="button"
+                    (click)="edit(event)"
+                  >
+                    Edit
+                  </button>
+
+
+                  <button
+                    class="btn btn-danger btn-sm"
+                    type="button"
+                    (click)="
+                      deleteTarget.set(event)
+                    "
+                  >
+                    Delete
+                  </button>
+
+
+                </div>
+
+              </article>
+
+            }
+
+          </div>
+
+        }
+
+      </section>
+
+
+    </div>
+
+
+
+    <app-confirm-dialog
+
+      [open]="
+        !!deleteTarget()
+      "
+
+      title="Delete event?"
+
+      [message]="
+        'Delete ' +
+        (
+          deleteTarget()?.eventName ??
+          'this event'
+        ) +
+        '? The API may block deletion when active bookings exist.'
+      "
+
+      confirmText="Delete"
+
+      (confirm)="remove()"
+
+      (cancel)="
+        deleteTarget.set(null)
+      "
+
+    />
+
+  </div>
+
+</section>

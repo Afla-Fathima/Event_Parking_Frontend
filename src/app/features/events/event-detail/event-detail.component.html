@@ -1,0 +1,265 @@
+<section class="page">
+
+  <div class="container">
+
+    @if (loading()) {
+
+      <app-loading>
+      </app-loading>
+
+    } @else if (error()) {
+
+      <app-error
+        [message]="error()"
+        (retry)="load()"
+      >
+      </app-error>
+
+    } @else {
+
+      @if (event(); as e) {
+
+        <button
+          class="back"
+          type="button"
+          (click)="back()"
+        >
+          ← Back to events
+        </button>
+
+
+        <article class="event-hero">
+
+          <!-- =====================================
+               PREMIUM EVENT POSTER
+          ====================================== -->
+
+          <div class="visual-panel">
+
+            <app-event-poster
+              [event]="e"
+            >
+            </app-event-poster>
+
+          </div>
+
+
+          <!-- =====================================
+               EVENT DETAILS
+          ====================================== -->
+
+          <div class="detail-panel">
+
+            <div class="detail-topline">
+
+              <span class="page-kicker">
+
+                {{ e.venueName }}
+
+              </span>
+
+
+              <span class="category-chip">
+
+                {{
+                  e.categoryName
+                  || 'Event'
+                }}
+
+              </span>
+
+            </div>
+
+
+            <h1>
+
+              {{ e.eventName }}
+
+            </h1>
+
+
+            <p class="description">
+
+              {{
+                e.description
+                ||
+                'Discover an unforgettable event experience.'
+              }}
+
+            </p>
+
+
+            <!-- =====================================
+                 EVENT INFORMATION
+            ====================================== -->
+
+            <div class="facts">
+
+              <div class="fact">
+
+                <span class="fact-icon">
+                  D
+                </span>
+
+
+                <span>
+
+                  <small>
+                    Date
+                  </small>
+
+                  <strong>
+
+                    {{
+                      e.eventDate
+                        | date:
+                            'fullDate'
+                    }}
+
+                  </strong>
+
+                </span>
+
+              </div>
+
+
+              <div class="fact">
+
+                <span class="fact-icon">
+                  T
+                </span>
+
+
+                <span>
+
+                  <small>
+                    Time
+                  </small>
+
+                  <strong>
+
+                    {{ e.startTime }}
+
+                    –
+
+                    {{ e.endTime }}
+
+                  </strong>
+
+                </span>
+
+              </div>
+
+
+              <div class="fact">
+
+                <span class="fact-icon">
+                  S
+                </span>
+
+
+                <span>
+
+                  <small>
+                    Capacity
+                  </small>
+
+                  <strong>
+
+                    {{ e.capacity }}
+
+                    guests
+
+                  </strong>
+
+                </span>
+
+              </div>
+
+
+              <div class="fact">
+
+                <span class="fact-icon">
+                  P
+                </span>
+
+
+                <span>
+
+                  <small>
+                    Parking
+                  </small>
+
+                  <strong>
+
+                    {{
+                      e.parkingFee
+                        | currency:
+                            'LKR':
+                            'symbol':
+                            '1.0-0'
+                    }}
+
+                  </strong>
+
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <!-- =====================================
+                 BOOKING CTA
+            ====================================== -->
+
+            <div class="cta">
+
+              <div class="price">
+
+                <small>
+                  Tickets from
+                </small>
+
+                <strong>
+
+                  {{
+                    e.ticketPrice
+                      | currency:
+                          'LKR':
+                          'symbol':
+                          '1.0-0'
+                  }}
+
+                </strong>
+
+              </div>
+
+
+              <button
+                class="book-button"
+                type="button"
+                (click)="chooseSeats()"
+              >
+
+                Choose seats
+
+                <span>
+                  →
+                </span>
+
+              </button>
+
+            </div>
+
+          </div>
+
+        </article>
+
+      }
+
+    }
+
+  </div>
+
+</section>

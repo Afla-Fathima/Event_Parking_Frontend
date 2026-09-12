@@ -1,0 +1,50 @@
+<section class="page">
+  <div class="container">
+    <button class="back" type="button" (click)="back()">← My bookings</button>
+    @if (loading()) {
+      <app-loading />
+    } @else if (error()) {
+      <app-error [message]="error()" (retry)="load()" />
+    } @else {
+      @if (booking(); as b) {
+      <section class="detail card">
+        <header>
+          <div>
+            <span class="page-kicker">{{ b.bookingNumber }}</span>
+            <h1>{{ b.eventName }}</h1>
+            <p class="muted">Created {{ b.bookingDate | date: 'medium' }}</p>
+          </div>
+          <div class="badges">
+            <app-status-badge [label]="b.status" /><app-status-badge [label]="b.paymentStatus" />
+          </div>
+        </header>
+        <div class="detail-grid">
+          <article>
+            <small>Selected seats</small
+            ><strong>{{ b.seats.length ? b.seats.join(', ') : '—' }}</strong>
+          </article>
+          <article>
+            <small>Parking</small><strong>{{ b.parkingSlot || 'Not reserved' }}</strong>
+          </article>
+          <article>
+            <small>Customer</small><strong>{{ b.customerName }}</strong>
+          </article>
+          <article>
+            <small>Total amount</small
+            ><strong>{{ b.totalAmount | currency: 'LKR' : 'symbol' : '1.0-0' }}</strong>
+          </article>
+        </div>
+        @if (b.status === 'Pending' && b.paymentStatus !== 'Paid') {
+          <div class="payment-call">
+            <div>
+              <strong>Payment still pending</strong
+              ><span>Complete the simulation to confirm this booking.</span>
+            </div>
+            <button class="btn btn-primary" type="button" (click)="pay()">Pay now →</button>
+          </div>
+        }
+      </section>
+      }
+    }
+  </div>
+</section>

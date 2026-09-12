@@ -1,0 +1,92 @@
+<section class="page">
+  <div class="container">
+    <header class="page-head">
+      <div>
+        <span class="page-kicker">SIMULATED PAYMENT</span>
+        <h1>Complete your booking</h1>
+        <p class="muted">
+          Test form only. Card fields are validated in Angular and are never sent to or stored by
+          the API.
+        </p>
+      </div>
+      <button class="btn btn-outline" type="button" (click)="back()">← Booking</button>
+    </header>
+    @if (loading()) {
+      <app-loading text="Loading amount due…" />
+    } @else if (error()) {
+      <app-error [message]="error()" (retry)="load()" />
+    } @else {
+      @if (booking(); as b) {
+      <div class="pay-grid">
+        <form class="card panel payment-form" [formGroup]="form" (ngSubmit)="askPay()">
+          <div class="secure"><span>TEST PAYMENT</span><b>SIMULATION</b></div>
+          <h2>Card details</h2>
+          <p class="muted">Use the prefilled test values. No real card data should be entered.</p>
+          <div class="field">
+            <label>Test card number</label
+            ><input class="input" formControlName="cardNumber" inputmode="numeric" />
+            @if (form.controls.cardNumber.touched && form.controls.cardNumber.invalid) {
+              <span class="field-error">Use a valid test number (Luhn check).</span>
+            }
+          </div>
+          <div class="grid grid-2">
+            <div class="field">
+              <label>Expiry MM/YY</label><input class="input" formControlName="expiry" />
+              @if (form.controls.expiry.touched && form.controls.expiry.invalid) {
+                <span class="field-error">Use a future MM/YY date.</span>
+              }
+            </div>
+            <div class="field">
+              <label>Test CVV</label
+              ><input class="input" formControlName="cvv" inputmode="numeric" />
+              @if (form.controls.cvv.touched && form.controls.cvv.invalid) {
+                <span class="field-error">3 or 4 digits required.</span>
+              }
+            </div>
+          </div>
+          <div class="field">
+            <label>Name on test card</label><input class="input" formControlName="name" />
+          </div>
+          <button class="btn btn-primary wide" type="submit" [disabled]="busy() || form.invalid">
+            {{ busy() ? 'Processing…' : 'Review simulated payment' }}
+          </button>
+        </form>
+        <aside class="card panel summary">
+          <span class="page-kicker">AMOUNT DUE</span>
+          <h2>{{ b.eventName }}</h2>
+          <div class="line">
+            <span>Booking</span><strong>{{ b.bookingNumber }}</strong>
+          </div>
+          <div class="line">
+            <span>Seats</span><strong>{{ b.seats.join(', ') }}</strong>
+          </div>
+          <div class="line">
+            <span>Parking</span><strong>{{ b.parkingSlot || 'None' }}</strong>
+          </div>
+          <div class="line">
+            <span>Payment status</span><strong>{{ status()?.paymentStatus }}</strong>
+          </div>
+          <div class="total">
+            <span>Total</span
+            ><strong>{{
+              status()?.amountDue ?? b.totalAmount | currency: 'LKR' : 'symbol' : '1.0-0'
+            }}</strong>
+          </div>
+          <p class="notice">
+            The backend confirms the booking only after a successful payment and prevents duplicate
+            payment.
+          </p>
+        </aside>
+      </div>
+      }
+    }
+    <app-confirm-dialog
+      [open]="confirmOpen()"
+      title="Submit simulated payment?"
+      message="No real card data is sent. The API receives only the payment method and will mark the booking paid if it is still valid."
+      confirmText="Pay now"
+      (confirm)="pay()"
+      (cancel)="confirmOpen.set(false)"
+    />
+  </div>
+</section>
