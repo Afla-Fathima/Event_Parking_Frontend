@@ -1,51 +1,159 @@
-<section class="page receipt-page">
-  <div class="container receipt-container">
-    @if (loading()) {
-      <app-loading />
-    } @else if (error()) {
-      <app-error [message]="error()" (retry)="load()" />
-    } @else {
-      @if (receipt(); as r) {
-      <div class="receipt card">
-        <header>
-          <div class="logo">P</div>
-          <div>
-            <span>PAYMENT RECEIPT</span>
-            <h1>ParkFlow</h1>
-          </div>
-          <div class="paid">PAID</div>
-        </header>
-        <div class="amount">
-          <span>Total paid</span
-          ><strong>{{ r.amount | currency: 'LKR' : 'symbol' : '1.2-2' }}</strong>
+<div class="receipt-page">
+
+  <div class="print-area">
+
+    <div class="receipt-card">
+
+      <div class="receipt-header">
+
+        <div class="logo">
+          P
         </div>
-        <div class="receipt-grid">
-          <div>
-            <small>Booking number</small><strong>{{ r.bookingNumber }}</strong>
-          </div>
-          <div>
-            <small>Customer</small><strong>{{ r.customerName }}</strong>
-          </div>
-          <div>
-            <small>Event</small><strong>{{ r.eventName }}</strong>
-          </div>
-          <div>
-            <small>Payment date</small><strong>{{ r.paymentDate | date: 'medium' }}</strong>
-          </div>
-          <div>
-            <small>Method</small><strong>{{ r.paymentMethod }}</strong>
-          </div>
-          <div>
-            <small>Reference</small><strong>{{ r.transactionReference }}</strong>
-          </div>
+
+        <div>
+          <h1>ParkFlow</h1>
+          <p>Event & Parking Reservation</p>
         </div>
-        <footer>Payment simulation receipt · Event & Parking Reservation System</footer>
+
+        <span class="paid">
+          PAID
+        </span>
+
       </div>
-      <div class="receipt-actions">
-        <button class="btn btn-outline" type="button" (click)="bookings()">My bookings</button
-        ><button class="btn btn-primary" type="button" (click)="print()">Print / Save PDF</button>
+
+
+      <div class="amount-section">
+
+        <span>Total Paid</span>
+
+        <h2>
+          {{receipt()?.amount | currency:'LKR ':'symbol':'1.2-2'}}
+        </h2>
+
       </div>
-      }
-    }
+
+
+
+      <div class="details-grid">
+
+
+        <div class="detail-box">
+
+          <label>
+            Booking Number
+          </label>
+
+          <strong>
+            {{receipt()?.bookingNumber}}
+          </strong>
+
+        </div>
+
+
+
+        <div class="detail-box">
+
+          <label>
+            Customer
+          </label>
+
+          <strong>
+            {{receipt()?.customerName}}
+          </strong>
+
+        </div>
+
+
+
+
+        <div class="detail-box">
+
+          <label>
+            Event
+          </label>
+
+          <strong>
+            {{receipt()?.eventName}}
+          </strong>
+
+        </div>
+
+
+
+
+        <div class="detail-box">
+
+          <label>
+            Payment Date
+          </label>
+
+          <strong>
+            {{receipt()?.paymentDate | date}}
+          </strong>
+
+        </div>
+
+
+
+
+        <div class="detail-box">
+
+          <label>
+            Payment Method
+          </label>
+
+          <strong>
+            {{receipt()?.paymentMethod}}
+          </strong>
+
+        </div>
+
+
+
+
+        <div class="detail-box">
+
+          <label>
+            Reference
+          </label>
+
+          <strong>
+            {{receipt()?.transactionReference}}
+          </strong>
+
+        </div>
+
+
+      </div>
+
+
+
+
+      <div class="footer">
+
+        Payment simulation receipt -
+        Event & Parking Reservation System
+
+      </div>
+
+
+    </div>
+
+
   </div>
-</section>
+
+
+
+  <div class="actions">
+
+    <button
+      (click)="printReceipt()">
+
+      Print / Save PDF
+
+    </button>
+
+  </div>
+
+
+</div>

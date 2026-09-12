@@ -10,7 +10,10 @@ import {
 @Component({
   selector: 'app-receipt',
   standalone: true,
-  imports: [CurrencyPipe, DatePipe, ErrorComponent, LoadingComponent],
+  imports: [
+    CurrencyPipe,
+    DatePipe,
+  ],
   templateUrl: './receipt.component.html',
   styleUrl: './receipt.component.css',
 })
@@ -43,4 +46,14 @@ export class ReceiptComponent {
   bookings(): void {
     void this.router.navigate(['/bookings']);
   }
+  printReceipt(): void {
+
+    document.body.classList.add('printing-receipt');
+  
+    window.print();
+  
+    document.body.classList.remove('printing-receipt');
+  
+  }
+
 }

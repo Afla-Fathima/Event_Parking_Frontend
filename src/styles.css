@@ -338,3 +338,53 @@ tbody tr:hover { background: rgba(59,130,246,.04); }
   .container { width: calc(100% - 24px); }
   .grid-2,.grid-3,.grid-4 { grid-template-columns: 1fr; }
 }
+@media print {
+
+  body * {
+    visibility: hidden !important;
+  }
+
+
+  .print-area,
+  .print-area * {
+
+    visibility: visible !important;
+
+  }
+
+
+  .print-area {
+
+    position: absolute;
+
+    left:0;
+
+    top:0;
+
+    width:100%;
+
+    background:white;
+
+  }
+
+
+  app-root {
+
+    display:block;
+
+  }
+
+
+  nav,
+  header,
+  aside,
+  .sidebar,
+  .navbar,
+  .actions {
+
+    display:none !important;
+
+  }
+
+
+}
