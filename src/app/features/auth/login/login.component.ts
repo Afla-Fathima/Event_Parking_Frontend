@@ -1,82 +1,231 @@
-import { Component, inject, signal } from '@angular/core';
-import { FormsModule, NgForm } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
-import { AuthService } from '../../../core/services/auth.service';
+import {
+  Component,
+  inject,
+  signal
+} from '@angular/core';
+
+import {
+  ReactiveFormsModule,
+  FormControl,
+  FormGroup,
+  Validators
+} from '@angular/forms';
+
+import {
+  Router,
+  RouterLink
+} from '@angular/router';
+
+import {
+  HttpErrorResponse
+} from '@angular/common/http';
+
+import {
+  AuthService
+} from '../../../core/services/auth.service';
+
 
 @Component({
+
   selector: 'app-login',
+
   standalone: true,
-  imports: [FormsModule, RouterLink],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+
+  imports: [
+
+    ReactiveFormsModule,
+
+    RouterLink
+
+  ],
+
+  templateUrl:
+    './login.component.html',
+
+  styleUrl:
+    './login.component.css'
+
 })
+
+
 export class LoginComponent {
-  private readonly auth = inject(AuthService);
-  private readonly router = inject(Router);
-  private readonly route = inject(ActivatedRoute);
 
-  email = '';
-  password = '';
-  readonly busy = signal(false);
-  readonly error = signal('');
-  readonly success = signal('');
 
-  constructor() {
-    if (this.auth.isAuthenticated()) {
-      this.goHome();
+  private readonly auth =
+    inject(AuthService);
+
+
+  private readonly router =
+    inject(Router);
+
+
+
+  readonly busy =
+    signal(false);
+
+
+
+  readonly error =
+    signal('');
+
+
+
+  readonly form =
+    new FormGroup({
+
+      email:
+
+        new FormControl(
+
+          '',
+
+          {
+
+            nonNullable:true,
+
+            validators:[
+
+              Validators.required,
+
+              Validators.email
+
+            ]
+
+          }
+
+        ),
+
+
+
+      password:
+
+        new FormControl(
+
+          '',
+
+          {
+
+            nonNullable:true,
+
+            validators:[
+
+              Validators.required,
+
+              Validators.minLength(6)
+
+            ]
+
+          }
+
+        )
+
+    });
+
+
+
+
+
+  submit():void{
+
+
+    if(
+
+      this.form.invalid ||
+
+      this.busy()
+
+    ){
+
+      this.form.markAllAsTouched();
+
       return;
+
     }
 
-    if (this.route.snapshot.queryParamMap.get('reset') === 'success') {
-      this.success.set('Password updated successfully. Sign in with your new password.');
-      this.email = sessionStorage.getItem('parkflow_reset_email') ?? '';
-      this.password = '';
-    }
-  }
 
-  submit(form: NgForm): void {
-    if (form.invalid || this.busy()) return;
+
+
+    const value =
+
+      this.form.getRawValue();
+
+
+
 
     this.busy.set(true);
+
     this.error.set('');
 
-    const normalizedPassword = this.password.trim();
-    if (!normalizedPassword) {
-      this.busy.set(false);
-      this.error.set('Password is required.');
-      return;
-    }
 
-    this.auth.login({ email: this.email.trim(), password: normalizedPassword }).subscribe({
-      next: () => {
-        this.busy.set(false);
-        sessionStorage.removeItem('parkflow_reset_email');
-        const returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
-        if (returnUrl) void this.router.navigateByUrl(returnUrl);
-        else this.goHome();
-      },
-      error: (error: HttpErrorResponse) => {
-        this.busy.set(false);
 
-        const apiMessage =
-          typeof error.error?.message === 'string' ? error.error.message : '';
 
-        if (apiMessage) {
-          this.error.set(apiMessage);
-          return;
+    this.auth
+
+      .login({
+
+        email:
+
+          value.email.trim(),
+
+
+        password:
+
+          value.password
+
+
+      })
+
+      .subscribe({
+
+
+
+        next: (response) => {
+
+          this.busy.set(false);
+        
+          console.log("LOGIN SUCCESS", response);
+        
+          if(response.role === 'Admin'){
+
+            void this.router.navigate(['/admin']);
+          
+          }
+          else{
+          
+            void this.router.navigate(['/dashboard']);
+          
+          }
+        
+        },
+
+
+
+        error:(err:HttpErrorResponse)=>{
+
+
+          this.busy.set(false);
+
+
+
+          this.error.set(
+
+            err.error?.message ??
+
+            'Invalid email or password.'
+
+          );
+
+
         }
 
-        this.error.set(
-          error.status === 401
-            ? 'Invalid email or password.'
-            : 'Unable to sign in. Make sure the API is running on port 5188.',
-        );
-      },
-    });
+
+
+      });
+
+
+
   }
 
-  private goHome(): void {
-    void this.router.navigate([this.auth.role() === 'Admin' ? '/admin/dashboard' : '/dashboard']);
-  }
+
+
 }

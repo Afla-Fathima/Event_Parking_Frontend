@@ -17,7 +17,9 @@ import {
   SeatStatusDirective
 } from '../../../shared/directives/app.directives';
 
+
 @Component({
+
   selector: 'app-seat-button',
 
   standalone: true,
@@ -33,42 +35,66 @@ import {
 
   styleUrl:
     './seat-button.component.css',
+
 })
+
+
 export class SeatButtonComponent {
 
+
   @Input({
-    required: true
+    required:true
   })
   seat!: Seat;
+
+
 
   @Input()
   selected = false;
 
+
+
+  // IMPORTANT
+  // parent component expects (select)
   @Output()
-  toggled =
+  select =
     new EventEmitter<Seat>();
+
+
 
 
   get available(): boolean {
 
     return (
-      this.seat
-        ?.status
+      this.seat.status
         ?.trim()
-        .toLowerCase() ===
-      'available'
+        .toLowerCase()
+        ===
+        'available'
     );
+
   }
+
+
 
 
   clickSeat(): void {
 
-    if (!this.available) {
+
+    if(!this.available){
+
       return;
+
     }
 
-    this.toggled.emit(
+
+
+    this.select.emit(
       this.seat
     );
+
+
   }
+
+
 }

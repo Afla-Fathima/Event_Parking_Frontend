@@ -25,6 +25,10 @@ import {
 import {
   AuthService
 } from '../../../core/services/auth.service';
+import {
+  Location
+} from '@angular/common';
+
 
 
 function passwordMatch(
@@ -42,14 +46,18 @@ function passwordMatch(
 }
 
 
+
 @Component({
+
   selector: 'app-register',
 
   standalone: true,
 
   imports: [
+
     ReactiveFormsModule,
     RouterLink
+
   ],
 
   templateUrl:
@@ -57,143 +65,231 @@ function passwordMatch(
 
   styleUrl:
     './register.component.css',
+
 })
+
+
 export class RegisterComponent {
+
 
   private readonly auth =
     inject(AuthService);
+
 
   private readonly router =
     inject(Router);
 
 
+
   readonly busy =
     signal(false);
 
+
+
   readonly error =
     signal('');
+
+
 
   readonly success =
     signal('');
 
 
+
   readonly form =
     new FormGroup(
+
       {
 
-        fullName:
-          new FormControl(
-            '',
-            {
-              nonNullable: true,
 
-              validators: [
+        fullName:
+
+          new FormControl(
+
+            '',
+
+            {
+
+              nonNullable:true,
+
+              validators:[
+
                 Validators.required,
+
                 Validators.minLength(2)
-              ],
+
+              ]
+
             }
+
           ),
+
 
 
         email:
-          new FormControl(
-            '',
-            {
-              nonNullable: true,
 
-              validators: [
+          new FormControl(
+
+            '',
+
+            {
+
+              nonNullable:true,
+
+              validators:[
+
                 Validators.required,
+
                 Validators.email
-              ],
+
+              ]
+
             }
+
           ),
+
+
 
 
         phone:
-          new FormControl(
-            '',
-            {
-              nonNullable: true,
 
-              validators: [
+          new FormControl(
+
+            '',
+
+            {
+
+              nonNullable:true,
+
+              validators:[
+
                 Validators.required,
 
+
                 Validators.pattern(
+
                   /^[0-9+\- ]{7,20}$/
+
                 )
-              ],
+
+              ]
+
             }
+
           ),
+
+
 
 
         password:
-          new FormControl(
-            '',
-            {
-              nonNullable: true,
 
-              validators: [
+          new FormControl(
+
+            '',
+
+            {
+
+              nonNullable:true,
+
+              validators:[
+
                 Validators.required,
+
                 Validators.minLength(6)
-              ],
+
+              ]
+
             }
+
           ),
+
+
 
 
         confirmPassword:
-          new FormControl(
-            '',
-            {
-              nonNullable: true,
 
-              validators: [
+          new FormControl(
+
+            '',
+
+            {
+
+              nonNullable:true,
+
+              validators:[
+
                 Validators.required
-              ],
+
+              ]
+
             }
-          ),
+
+          )
+
       },
 
       {
+
         validators:
+
           passwordMatch
+
       }
+
     );
 
 
-  constructor() {
 
-    /*
-     * User email change panna
-     * old "emailTaken" server error
-     * remove aakanum.
-     */
+
+  constructor(){
+
+
     this.form.controls
+
       .email
+
       .valueChanges
+
       .subscribe(
-        () =>
-          this.clearEmailTakenError()
+
+        ()=>this.clearEmailTakenError()
+
       );
+
+
   }
 
 
-  submit(): void {
 
-    if (
+
+
+
+  submit():void{
+
+
+    if(
+
       this.form.invalid ||
-      this.busy()
-    ) {
 
-      this.form
-        .markAllAsTouched();
+      this.busy()
+
+    ){
+
+      this.form.markAllAsTouched();
 
       return;
+
     }
 
 
+
+
+
     const value =
-      this.form
-        .getRawValue();
+
+      this.form.getRawValue();
+
+
 
 
     this.busy.set(true);
@@ -203,152 +299,216 @@ export class RegisterComponent {
     this.success.set('');
 
 
+
+
+
     this.auth
+
       .register({
+
         fullName:
+
           value.fullName.trim(),
 
+
         email:
+
           value.email.trim(),
 
+
         phone:
+
           value.phone.trim(),
 
+
         password:
-          value.password,
+
+          value.password
+
+
       })
+
+
       .subscribe({
+
+
 
         next: () => {
 
           this.busy.set(false);
-
+        
           this.success.set(
-            'Account created. You can sign in now.'
+            'Account created successfully. Redirecting to sign in...'
           );
-
-
-          setTimeout(
-            () =>
-              void this.router.navigate(
-                ['/login']
-              ),
-            800
-          );
+        
+        
+          this.form.reset();
+        
+        
+          setTimeout(() => {
+        
+            void this.router.navigate([
+              '/login'
+            ]);
+        
+          }, 1000);
+        
+        
         },
 
+        error:(error:HttpErrorResponse)=>{
 
-        error:
-          (
-            error:
-              HttpErrorResponse
-          ) => {
 
-            this.busy.set(
-              false
+
+          this.busy.set(false);
+
+
+
+          const message =
+
+            String(
+
+              error.error?.message ?? ''
+
             );
 
 
-            const message =
-              String(
-                error.error?.message ??
-                ''
-              );
+
+          const lowerMessage =
+
+            message.toLowerCase();
 
 
-            const lowerMessage =
-              message.toLowerCase();
 
 
-            const duplicateEmail =
-              error.status === 409 &&
 
-              lowerMessage.includes(
-                'email'
-              ) &&
-
-              (
-                lowerMessage.includes(
-                  'exist'
-                ) ||
-
-                lowerMessage.includes(
-                  'duplicate'
-                )
-              );
+          const duplicateEmail =
 
 
-            if (duplicateEmail) {
-
-              const emailControl =
-                this.form.controls
-                  .email;
+            error.status === 409 &&
 
 
-              emailControl.setErrors({
-                ...(
-                  emailControl.errors ??
-                  {}
-                ),
-
-                emailTaken: true
-              });
+            lowerMessage.includes('email') &&
 
 
-              emailControl
-                .markAsTouched();
+            (
 
+              lowerMessage.includes('exist') ||
 
-              /*
-               * General banner show panna
-               * vendam.
-               */
-              this.error.set('');
+              lowerMessage.includes('duplicate')
 
-
-              return;
-            }
-
-
-            this.error.set(
-              message ||
-              'Unable to create account.'
             );
-          },
+
+
+
+
+
+          if(duplicateEmail){
+
+
+
+            const emailControl =
+
+              this.form.controls.email;
+
+
+
+
+            emailControl.setErrors({
+
+
+              ...(emailControl.errors ?? {}),
+
+
+              emailTaken:true
+
+
+            });
+
+
+
+
+            emailControl.markAsTouched();
+
+
+
+            this.error.set('');
+
+            return;
+
+
+          }
+
+
+
+
+          this.error.set(
+
+            message ||
+
+            'Unable to create account.'
+
+          );
+
+
+        }
+
+
       });
+
+
   }
 
 
-  private clearEmailTakenError():
-    void {
+
+
+
+  private clearEmailTakenError():void{
+
 
     const emailControl =
+
       this.form.controls.email;
 
 
-    if (
-      !emailControl.errors
-        ?.['emailTaken']
-    ) {
+
+    if(
+
+      !emailControl.errors?.['emailTaken']
+
+    ){
 
       return;
+
     }
 
 
+
+
     const errors = {
+
       ...emailControl.errors
+
     };
 
 
-    delete errors[
-      'emailTaken'
-    ];
+
+
+    delete errors['emailTaken'];
+
 
 
     emailControl.setErrors(
+
       Object.keys(errors).length
-        ? errors
-        : null
+
+      ? errors
+
+      : null
+
     );
+
   }
+
+
 }

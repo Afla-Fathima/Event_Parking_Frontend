@@ -25,7 +25,7 @@ interface DashboardStat {
 export class CustomerDashboardComponent {
   readonly auth = inject(AuthService);
   private readonly api = inject(DashboardService);
-
+  backgroundImage = 'assets/images/event-parking-bg.png';
   readonly stats = signal<DashboardStat[]>([]);
   readonly loading = signal(true);
   readonly error = signal('');
