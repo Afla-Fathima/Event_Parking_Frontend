@@ -97,45 +97,38 @@
 
 
 
-      <div class="actions">
+   <div class="seat-actions">
+
+<button
+class="back-btn"
+(click)="back()">
+
+← Back
+
+</button>
 
 
-        <button
+<div class="selected-count">
 
-          type="button"
+Selected Seats:
+<strong>
+{{selectedSeatIds().size}}
+</strong>
 
-          (click)="back()"
-
-        >
-
-          Back
-
-        </button>
+</div>
 
 
+<button
+class="continue-btn"
+(click)="continue()"
+[disabled]="state.seatCount()===0">
+
+Continue →
+
+</button>
 
 
-
-        <button
-
-          type="button"
-
-          (click)="continue()"
-
-          [disabled]="
-            state.seatCount() === 0
-          "
-
-        >
-
-          Continue
-
-        </button>
-
-
-      </div>
-
-
+</div>
 
     }
 
