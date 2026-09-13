@@ -1,89 +1,320 @@
 <section class="page">
+
   <div class="container">
+
     <header class="hero">
-      <div>
-        <span class="page-kicker">CUSTOMER DASHBOARD</span>
-        <h1>Welcome back, {{ auth.user()?.fullName }}</h1>
+
+      <div class="hero-content">
+
+        <span class="page-kicker">
+          CUSTOMER DASHBOARD
+        </span>
+
+
+        <h1>
+          Welcome back,
+          {{ auth.user()?.fullName }}
+        </h1>
+
+
         <p>
-          Everything you need for events, seats, parking and payments — without leaving the
-          platform.
+          Everything you need for events, seats, parking and payments —
+          without leaving the platform.
         </p>
+
+
+
         <div class="hero-actions">
-          <a class="btn btn-primary" routerLink="/events">Book an event</a
-          ><a class="btn btn-outline" routerLink="/bookings">My bookings</a>
+
+          <a 
+            class="btn btn-primary"
+            routerLink="/events">
+            Book an event →
+          </a>
+
+
+          <a 
+            class="btn btn-outline"
+            routerLink="/bookings">
+            My bookings
+          </a>
+
         </div>
+
+
       </div>
+
+
+
       <div class="hero-art">
+
         <div class="orbit one"></div>
+
         <div class="orbit two"></div>
-        <div class="parking-sign">P</div>
+
+
+        <div class="parking-sign">
+          P
+        </div>
+
+
       </div>
+
+
     </header>
+
+
+
     @if (loading()) {
+
       <app-loading />
-    } @else if (error()) {
-      <app-error [message]="error()" (retry)="load()" />
-    } @else {
-      <div class="stats grid grid-4">
-        @for (stat of stats(); track stat.label) {
-          <app-stat-card
-            [icon]="stat.icon"
-            [label]="stat.label"
-            [value]="stat.value"
-            [hint]="stat.hint"
-          />
-        }
-      </div>
-      <section class="quick-grid">
-        <a class="quick card" routerLink="/events">
-          <div>E</div>
-          <span>
-            <strong>Browse Events</strong>
-            <small>Search by date, venue or category</small>
-          </span>
-          <b>→</b>
-        </a>
-        <a class="quick card" routerLink="/events">
-          <div>S</div>
-          <span>
-            <strong>Choose Seats</strong>
-            <small>Select an event, then open its live seat map</small>
-          </span>
-          <b>→</b>
-        </a>
-        <a class="quick card" routerLink="/events">
-          <div>P</div>
-          <span>
-            <strong>Reserve Parking</strong>
-            <small>Select an event, then choose an available slot</small>
-          </span>
-          <b>→</b>
-        </a>
-        <a class="quick card" routerLink="/bookings">
-          <div>B</div>
-          <span>
-            <strong>My Bookings</strong>
-            <small>Review, pay or cancel bookings</small>
-          </span>
-          <b>→</b>
-        </a>
-        <a class="quick card" routerLink="/payments">
-          <div>₹</div>
-          <span>
-            <strong>Payments</strong>
-            <small>View simulated payment history and receipts</small>
-          </span>
-          <b>→</b>
-        </a>
-        <a class="quick card" routerLink="/notifications">
-          <div>N</div>
-          <span>
-            <strong>Notifications</strong>
-            <small>See booking and payment updates</small>
-          </span>
-          <b>→</b>
-        </a>
-      </section>
+
     }
+
+    @else if (error()) {
+
+
+      <app-error
+        [message]="error()"
+        (retry)="load()" />
+
+
+    }
+
+    @else {
+
+
+      <div class="stats grid grid-4">
+
+
+        @for (stat of stats(); track stat.label) {
+
+
+          <app-stat-card
+
+            [icon]="stat.icon"
+
+            [label]="stat.label"
+
+            [value]="stat.value"
+
+            [hint]="stat.hint"
+
+          />
+
+
+        }
+
+
+      </div>
+
+
+
+
+
+      <section class="quick-grid">
+
+
+        <a class="quick card"
+           routerLink="/events">
+
+
+          <div>E</div>
+
+
+          <span>
+
+            <strong>
+              Browse Events
+            </strong>
+
+
+            <small>
+              Search by date, venue or category
+            </small>
+
+          </span>
+
+
+          <b>
+            →
+          </b>
+
+
+        </a>
+
+
+
+
+
+        <a class="quick card"
+           routerLink="/events">
+
+
+          <div>S</div>
+
+
+          <span>
+
+            <strong>
+              Choose Seats
+            </strong>
+
+
+            <small>
+              Select an event and open seat map
+            </small>
+
+          </span>
+
+
+          <b>
+            →
+          </b>
+
+
+        </a>
+
+
+
+
+
+        <a class="quick card"
+           routerLink="/events">
+
+
+          <div>P</div>
+
+
+          <span>
+
+            <strong>
+              Reserve Parking
+            </strong>
+
+
+            <small>
+              Choose available parking slot
+            </small>
+
+          </span>
+
+
+          <b>
+            →
+          </b>
+
+
+        </a>
+
+
+
+
+
+        <a class="quick card"
+           routerLink="/bookings">
+
+
+          <div>B</div>
+
+
+          <span>
+
+            <strong>
+              My Bookings
+            </strong>
+
+
+            <small>
+              Review, pay or cancel bookings
+            </small>
+
+
+          </span>
+
+
+          <b>
+            →
+          </b>
+
+
+        </a>
+
+
+
+
+
+        <a class="quick card"
+           routerLink="/payments">
+
+
+          <div>₹</div>
+
+
+          <span>
+
+            <strong>
+              Payments
+            </strong>
+
+
+            <small>
+              View payment history and receipts
+            </small>
+
+
+          </span>
+
+
+          <b>
+            →
+          </b>
+
+
+        </a>
+
+
+
+
+
+        <a class="quick card"
+           routerLink="/notifications">
+
+
+          <div>N</div>
+
+
+          <span>
+
+            <strong>
+              Notifications
+            </strong>
+
+
+            <small>
+              See booking and payment updates
+            </small>
+
+
+          </span>
+
+
+          <b>
+            →
+          </b>
+
+
+        </a>
+
+
+
+      </section>
+
+
+    }
+
+
   </div>
+
+
 </section>

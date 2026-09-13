@@ -6,14 +6,9 @@
   [appSeatStatus]="seat.status"
 
   [ngClass]="{
-    'seat-available':
-      available && !selected,
-
-    'seat-selected':
-      selected,
-
-    'seat-booked':
-      !available
+    'seat-available': available && !selected,
+    'seat-selected': selected,
+    'seat-booked': !available
   }"
 
   [disabled]="!available"
@@ -34,7 +29,8 @@
   (click)="clickSeat()"
 >
 
-  @if (selected) {
+
+  @if(selected) {
 
     <span class="selected-check">
       ✓
@@ -42,8 +38,10 @@
 
   }
 
+
   <span class="seat-number">
     {{ seat.seatNumber | seatLabel }}
   </span>
+
 
 </button>

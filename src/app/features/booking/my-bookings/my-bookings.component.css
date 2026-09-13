@@ -2,37 +2,55 @@
   display: grid;
   gap: 14px;
 }
+
+
 .booking {
   position: relative;
   display: grid;
   grid-template-columns: 5px 1fr;
   overflow: hidden;
 }
+
+
 .accent {
   background: linear-gradient(180deg, #625df5, #60a5fa);
 }
+
+
 .main {
   padding: 20px;
 }
+
+
 .top {
   display: flex;
   justify-content: space-between;
   gap: 14px;
 }
+
+
 .code {
   color: var(--primary);
   font-size: 9px;
   font-weight: 900;
   letter-spacing: 0.08em;
 }
+
+
 .top h2 {
   margin: 5px 0 12px;
 }
+
+
+/* Booking details cards */
+
 .details {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 10px;
 }
+
+
 .details span {
   display: grid;
   gap: 3px;
@@ -41,25 +59,121 @@
   background: #fafbfe;
   font-size: 11px;
   font-weight: 700;
+  color: #1e293b !important;
 }
+
+
+/* Small label text */
+
 .details small {
-  color: var(--muted);
+  color: #64748b !important;
   font-size: 9px;
-  font-weight: 600;
+  font-weight: 700;
 }
+
+
+/* Main values */
+
+.details strong,
+.details b {
+  color: #0f172a !important;
+  font-weight: 800;
+}
+
+
+/* Actions */
+
 .actions {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
   margin-top: 14px;
 }
+
+
 @media (max-width: 760px) {
+
   .details {
     grid-template-columns: repeat(2, 1fr);
   }
+
 }
+
+
 @media (max-width: 460px) {
+
   .details {
     grid-template-columns: 1fr;
   }
+
+}
+
+
+/* View details page cards */
+
+.details span {
+  color: #1e293b !important;
+}
+
+
+.details small {
+  color: #64748b !important;
+}
+
+
+/* Remove old faded colors */
+
+.booking-card .booking-details,
+.booking-card .booking-details *,
+.booking-card span,
+.booking-card p {
+  color: inherit;
+}
+
+
+.text-muted,
+.muted,
+.secondary-text {
+  color: #64748b !important;
+}
+
+
+/* Total amount highlight */
+
+.total {
+  color: #2563eb !important;
+  font-weight: 800;
+}
+/* View booking details cards - text color fix */
+
+.summary-card,
+.info-card,
+.booking-summary,
+.details-card {
+  color: #1e293b !important;
+}
+
+
+.summary-card span,
+.info-card span,
+.booking-summary span,
+.details-card span {
+  color: #0f172a !important;
+  font-weight: 800 !important;
+}
+
+
+.summary-card small,
+.info-card small,
+.booking-summary small,
+.details-card small {
+  color: #64748b !important;
+}
+
+
+/* fallback for white boxes */
+
+div[class*="summary"] div,
+div[class*="detail"] div {
+  color: #0f172a !important;
 }
